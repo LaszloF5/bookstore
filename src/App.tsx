@@ -7,6 +7,7 @@ function App() {
   const header3: string = "Basket: items num and value";
   const [isActive, setActive] = useState<boolean>(false);
   const categories: string[] = [
+    "All books",
     "history",
     "fantasy",
     "thriller",
@@ -23,6 +24,36 @@ function App() {
     setActive(!isActive);
   };
 
+  interface Book {
+    id: number;
+    title: string;
+    author: string;
+    date: number;
+    shortDescription: string;
+    longDescription: string;
+    price: number;
+  }
+
+  // Get all books
+  const getAllBooks = async (): Promise<Book[]> => {
+    const url = "http://localhost:8000/library";
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Hiba a lekérdezés során: ${response.status}`);
+      }
+      const datas: { books: Book[] }[] = await response.json();
+      const allBooks: Book[] = datas.flatMap((data) => data.books);
+      console.log('All books: ', allBooks)
+      return allBooks;
+    } catch {
+      console.error("Error fetching books");
+      return [];
+    }
+  };
+
+  getAllBooks();
+
   return (
     <div className="App">
       <header className="App-header">
@@ -31,14 +62,15 @@ function App() {
             <li>{logo}</li>
             <li className="posRel" onClick={toggleCategories}>
               {books}{" "}
-              {(
-               <ul className={`categories-ul ${isActive ? 'visible' : 'hidden'}`}>
-               {categories.map((category) => (
-                 <li key={category}>{category}</li>
-               ))}
-             </ul>
-             
-              )}
+              {
+                <ul
+                  className={`categories-ul ${isActive ? "visible" : "hidden"}`}
+                >
+                  {categories.map((category) => (
+                    <li key={category}>{category}</li>
+                  ))}
+                </ul>
+              }
             </li>
             <form action="#" className="search-book-form">
               <label
