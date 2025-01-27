@@ -20,7 +20,7 @@ function App() {
     "sport",
   ];
 
-  const toggleCategories = () => {
+  const toggleCategories: Function = () => {
     setActive(!isActive);
   };
 
@@ -32,6 +32,7 @@ function App() {
     shortDescription: string;
     longDescription: string;
     price: number;
+    image: string;
   }
 
   // Get all books
@@ -42,8 +43,8 @@ function App() {
       if (!response.ok) {
         throw new Error(`Hiba a lekérdezés során: ${response.status}`);
       }
-      const datas: { books: Book[] }[] = await response.json();
-      const allBooks: Book[] = datas.flatMap((data) => data.books);
+      const getData: { books: Book[] }[] = await response.json();
+      const allBooks: Book[] = getData.flatMap((data) => data.books);
       console.log('All books: ', allBooks)
       return allBooks;
     } catch {

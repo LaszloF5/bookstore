@@ -6,6 +6,8 @@ const PORT = 8000;
 
 app.use(cors());
 
+app.use('/images', express.static('images'));
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
@@ -23,6 +25,7 @@ const library = [
         shortDescription: `A historian reviews the causes of the Roman Empire's collapse in its final days.`,
         longDescription: `One of the greatest empires in history, Rome, falls slowly and almost unnoticed due to a combination of political, economic, and military issues that lead to its inevitable downfall.`,
         price: 20.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 11,
@@ -34,6 +37,7 @@ const library = [
         longDescription:
           "The Middle Ages was a time of myths, legends, and dark history. This book uncovers lesser-known facts about the period, revealing the complexity of this era and how it shaped the modern world.",
         price: 16.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 12,
@@ -45,6 +49,7 @@ const library = [
         longDescription:
           "The French Revolution brought about radical change in French society and had far-reaching consequences across Europe, reshaping the political and social landscape.",
         price: 17.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 13,
@@ -56,6 +61,7 @@ const library = [
         longDescription:
           "This book delves into the tactics, outcomes, and significance of history's most famous battles, providing insights into how they altered the course of history.",
         price: 18.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 14,
@@ -67,6 +73,7 @@ const library = [
         longDescription:
           "The Aztecs were one of the most powerful civilizations in pre-Columbian America. This book explores their rise to power and the factors that led to their dramatic fall.",
         price: 20.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 15,
@@ -78,6 +85,7 @@ const library = [
         longDescription:
           "The Vikings are often remembered for their raids, but they were also skilled traders and explorers. This book examines the dual nature of their legacy.",
         price: 15.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 16,
@@ -89,6 +97,7 @@ const library = [
         longDescription:
           "The medieval kings of Europe were not only political figures but also cultural symbols whose reigns defined the course of European history. This book explores their achievements, challenges, and legacies.",
         price: 13.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 17,
@@ -100,6 +109,7 @@ const library = [
         longDescription:
           "Ancient Egypt remains one of the most enigmatic civilizations in history. This book uncovers the secrets behind its architecture, religion, and the culture that built the pyramids.",
         price: 19.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 18,
@@ -111,6 +121,7 @@ const library = [
         longDescription:
           "The American Revolution was a pivotal moment in history that set the stage for the founding of the United States. This book examines the causes, key events, and global repercussions of the revolution.",
         price: 14.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 19,
@@ -122,6 +133,7 @@ const library = [
         longDescription:
           "The World Wars shaped the 20th century in profound ways. This book provides a comprehensive overview of both World War I and World War II, focusing on key battles, political changes, and the long-term impact on global affairs.",
         price: 18.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
     ],
   },
@@ -139,6 +151,7 @@ const library = [
         longDescription:
           "Set in a world where magic is fading, a sorceress is tasked with finding the mythical Emerald Sword to restore balance and defeat a rising evil force.",
         price: 19.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 21,
@@ -150,6 +163,7 @@ const library = [
         longDescription:
           "A fierce dragon-rider must navigate political intrigue and magical threats while unraveling the truth behind an ancient prophecy that foretells the end of their world.",
         price: 17.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 22,
@@ -161,6 +175,7 @@ const library = [
         longDescription:
           "As dark forces encroach upon the kingdom, a young princess learns of a realm hidden within the shadows, with its own ancient powers. She must protect it at all costs.",
         price: 21.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 23,
@@ -172,6 +187,7 @@ const library = [
         longDescription:
           "Magic has been banned for centuries, but when a young enchanter discovers his powers, he becomes the last hope to restore magic to the world.",
         price: 15.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 24,
@@ -183,6 +199,7 @@ const library = [
         longDescription:
           "In a land plagued by firestorms, a girl discovers she can control flames. As war looms, she must master her powers to prevent the city from falling into ruin.",
         price: 18.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 25,
@@ -194,6 +211,7 @@ const library = [
         longDescription:
           "Cursed by an ancient spell, a sorcerer must embark on a perilous journey to break the curse and restore his honor, while battling the dark forces pursuing him.",
         price: 22.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 26,
@@ -205,6 +223,7 @@ const library = [
         longDescription:
           "On a journey across treacherous seas, a diverse group of adventurers searches for the Moonlit Isles, said to hold a secret that can grant immortality.",
         price: 20.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 27,
@@ -216,6 +235,7 @@ const library = [
         longDescription:
           "After accidentally crossing into the faerie realm, a girl discovers she is the heir to a forgotten promise made to the Faerie Queen. To save her world, she must honor the oath.",
         price: 16.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 28,
@@ -227,6 +247,7 @@ const library = [
         longDescription:
           "When an ancient crystal is stolen, a prince and his ragtag group of companions must embark on a dangerous quest to retrieve it and restore balance to their fractured world.",
         price: 19.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 29,
@@ -238,6 +259,7 @@ const library = [
         longDescription:
           "A boy from a small village unexpectedly becomes the leader of the Wild Hunt, a group known for their ability to track and defeat mythical creatures that threaten the land.",
         price: 18.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
     ],
   },
@@ -255,6 +277,7 @@ const library = [
         longDescription:
           "When a renowned artist vanishes without a trace, a seasoned detective delves into the case, uncovering a web of secrets that leads to a shocking conclusion.",
         price: 22.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 31,
@@ -266,6 +289,7 @@ const library = [
         longDescription:
           "While researching her genealogy, a woman discovers a hidden history of crime and betrayal within her family, leading her to confront the past and its lingering effects.",
         price: 19.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 32,
@@ -277,6 +301,7 @@ const library = [
         longDescription:
           "After witnessing a murder, a mute woman becomes the prime witness in a case no one believes. She must use her wit and courage to expose the truth.",
         price: 18.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 33,
@@ -288,6 +313,7 @@ const library = [
         longDescription:
           "A renowned art gallery houses more than just priceless paintings—it also hides a chilling secret. A detective must piece together clues from the past to stop a deadly conspiracy.",
         price: 20.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 34,
@@ -299,6 +325,7 @@ const library = [
         longDescription:
           "After being locked in a room with a killer, a woman must use her wits and observation skills to escape and uncover the killer's true identity.",
         price: 17.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 35,
@@ -310,6 +337,7 @@ const library = [
         longDescription:
           "A string of unexplained deaths occurs around a cursed mirror. A detective investigates the supernatural connection, uncovering more than he bargained for.",
         price: 21.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 36,
@@ -321,6 +349,7 @@ const library = [
         longDescription:
           "When a priest hears a confession that might hold the answer to an unsolved murder, he finds himself caught in a moral dilemma that could alter the course of the investigation.",
         price: 19.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 37,
@@ -332,6 +361,7 @@ const library = [
         longDescription:
           "After her husband's sudden death, a woman delves into his past, uncovering shocking truths that lead her to a dangerous conclusion.",
         price: 18.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 38,
@@ -343,6 +373,7 @@ const library = [
         longDescription:
           "A man who disappeared years ago returns, but his identity and past remain a mystery. A detective uncovers secrets that lead to a far-reaching conspiracy.",
         price: 22.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 39,
@@ -354,6 +385,7 @@ const library = [
         longDescription:
           "A defense attorney discovers that his client's alibi might be fabricated, leading him to dig deeper into the case and confront dangerous enemies.",
         price: 23.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
     ],
   },
@@ -371,6 +403,7 @@ const library = [
         longDescription:
           "When two lovers who once separated by fate meet again, their feelings for each other ignite once more. However, both must confront their pasts before they can build a future.",
         price: 24.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 41,
@@ -382,6 +415,7 @@ const library = [
         longDescription:
           "After losing someone close to her, a woman travels to find herself, along the way discovering a love she never thought possible.",
         price: 21.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 42,
@@ -393,6 +427,7 @@ const library = [
         longDescription:
           "What begins as an unexpected encounter in a café turns into a whirlwind romance. Both must confront their fears and insecurities to be together.",
         price: 18.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 43,
@@ -404,6 +439,7 @@ const library = [
         longDescription:
           "A woman haunted by the past finds solace in the arms of a stranger, but her inability to let go of her memories threatens their relationship.",
         price: 17.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 44,
@@ -415,6 +451,7 @@ const library = [
         longDescription:
           "A romance between two people from contrasting social worlds blooms, but their love faces resistance from both their families and society.",
         price: 23.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 45,
@@ -426,6 +463,7 @@ const library = [
         longDescription:
           "In a world full of challenges, two souls fight for love against the pressures of life, family, and their own insecurities.",
         price: 19.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 46,
@@ -437,6 +475,7 @@ const library = [
         longDescription:
           "When two people separated by circumstance are reunited after many years, they must overcome their past hurts to find happiness once again.",
         price: 22.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 47,
@@ -448,6 +487,7 @@ const library = [
         longDescription:
           "As the years pass, a couple's relationship faces many challenges. Will their love survive the tests of time, or will they be pulled apart by life's demands?",
         price: 20.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 48,
@@ -459,6 +499,7 @@ const library = [
         longDescription:
           "A passionate dancer and a talented musician fall in love through their shared love of performance, but they must overcome their own fears to truly connect.",
         price: 25.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 49,
@@ -470,6 +511,7 @@ const library = [
         longDescription:
           "What begins as an unexpected fling between two strangers soon turns into a deep and passionate love affair neither of them anticipated.",
         price: 21.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
     ],
   },
@@ -487,6 +529,7 @@ const library = [
         longDescription:
           "Dr. Emma Vance invents a machine that allows her to travel between parallel universes, but every journey risks altering her own reality beyond repair.",
         price: 27.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 51,
@@ -498,6 +541,7 @@ const library = [
         longDescription:
           "Set in a world where technology can manipulate people's memories, a group of hackers rises up to take down the corporation that controls their minds.",
         price: 22.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 52,
@@ -509,6 +553,7 @@ const library = [
         longDescription:
           "As the population becomes more dependent on artificial hearts, a scientist discovers that the devices have a hidden purpose, and she must stop a catastrophic event.",
         price: 25.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 53,
@@ -520,6 +565,7 @@ const library = [
         longDescription:
           "When a time traveler is sent back to the 21st century to prevent a catastrophe, he finds himself caught in a web of temporal consequences that could alter history forever.",
         price: 21.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 54,
@@ -531,6 +577,7 @@ const library = [
         longDescription:
           "On Mars, a group of astronauts discovers the remnants of an ancient alien race and must uncover the secrets of their demise while dealing with their own survival.",
         price: 29.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 55,
@@ -542,6 +589,7 @@ const library = [
         longDescription:
           "As an intergalactic war threatens to engulf the galaxy, a former military commander must lead a ragtag fleet of rebels to face a superior, unstoppable force.",
         price: 26.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 56,
@@ -553,6 +601,7 @@ const library = [
         longDescription:
           "In a futuristic world, a group of bioengineers creates a genetically enhanced human, but their creation becomes a dangerous force, threatening their own survival.",
         price: 23.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 57,
@@ -564,6 +613,7 @@ const library = [
         longDescription:
           "As AI begins to take control of every aspect of society, a small band of rebels struggles to prevent machines from completely overtaking the world.",
         price: 24.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 58,
@@ -575,6 +625,7 @@ const library = [
         longDescription:
           "When a young engineer discovers the truth about the reality they inhabit, they must navigate a complex, ever-shifting world while trying to escape before time runs out.",
         price: 22.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 59,
@@ -586,6 +637,7 @@ const library = [
         longDescription:
           "The emergence of transhumanism creates a division between humanity and those who have fully merged with machines. As tensions rise, a war breaks out to determine the future of both factions.",
         price: 28.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
     ],
   },
@@ -603,6 +655,7 @@ const library = [
         longDescription:
           "Set during the Italian Renaissance, this novel follows the life of a noblewoman caught in a world of political intrigue, betrayal, and a fight for power.",
         price: 23.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 61,
@@ -614,6 +667,7 @@ const library = [
         longDescription:
           "Based on true events, this gripping historical thriller tells the story of an Italian teenager who becomes a spy during World War II, risking everything to fight the Axis powers.",
         price: 24.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 62,
@@ -625,6 +679,7 @@ const library = [
         longDescription:
           "In the midst of war and political turmoil, a young queen struggles to keep her kingdom intact, contending with betrayals, power struggles, and the weight of her crown.",
         price: 26.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 63,
@@ -636,6 +691,7 @@ const library = [
         longDescription:
           "After fighting in the trenches of World War I, a soldier returns home, only to find that his country and his family have changed in ways he never imagined.",
         price: 28.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 64,
@@ -647,6 +703,7 @@ const library = [
         longDescription:
           "Set in 1920s China, this novel tells the story of a woman trapped in a loveless marriage who embarks on a journey of personal discovery while facing the horrors of a cholera epidemic.",
         price: 20.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 65,
@@ -658,6 +715,7 @@ const library = [
         longDescription:
           "This gripping historical novel follows the rise of Rani Laxmibai, a fearless queen who fought to protect her kingdom and her people from British colonization.",
         price: 27.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 66,
@@ -669,6 +727,7 @@ const library = [
         longDescription:
           "Set in Nazi Germany, this poignant story follows a young girl who steals books to escape the horrors of war, while witnessing the strength of the human spirit.",
         price: 19.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 67,
@@ -680,6 +739,7 @@ const library = [
         longDescription:
           "Amid the chaos of the Irish War of Independence, two brothers must choose whether to fight for the British or their homeland, with devastating consequences.",
         price: 25.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 68,
@@ -691,6 +751,7 @@ const library = [
         longDescription:
           "The story of two sisters in Nazi-occupied France, one who joins the resistance and the other who survives the war in silence, both facing unimaginable hardships.",
         price: 29.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 69,
@@ -702,6 +763,7 @@ const library = [
         longDescription:
           "A young girl's mistake during World War II leads to a lie that tears apart the lives of her sister and the man she loves, leading to decades of regret and atonement.",
         price: 22.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
     ],
   },
@@ -719,6 +781,7 @@ const library = [
         longDescription:
           "A group of individuals is invited to stay in a haunted mansion, where they must confront their deepest fears as they uncover the terrifying secrets of Hill House.",
         price: 18.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 71,
@@ -730,6 +793,7 @@ const library = [
         longDescription:
           "A terrifying tale of possession and exorcism, where a priest must battle an evil force to save a young girl from the supernatural entity that controls her.",
         price: 22.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 72,
@@ -741,6 +805,7 @@ const library = [
         longDescription:
           "Trapped in an isolated hotel with a malevolent spirit, a man's descent into madness threatens to destroy his family as supernatural forces awaken.",
         price: 24.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 73,
@@ -752,6 +817,7 @@ const library = [
         longDescription:
           "When a wave of suicides sweeps the country, a former FBI agent uncovers a government conspiracy that uses mind control to manipulate people into taking their own lives.",
         price: 21.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 74,
@@ -763,6 +829,7 @@ const library = [
         longDescription:
           "A post-apocalyptic world where strange creatures cause anyone who sees them to go insane, a mother must protect her children by navigating the treacherous world blindfolded.",
         price: 19.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 75,
@@ -774,6 +841,7 @@ const library = [
         longDescription:
           "The classic tale of Count Dracula, a vampire from Transylvania who seeks to spread his curse to England, where a group of heroes must stop his reign of terror.",
         price: 15.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 76,
@@ -796,6 +864,7 @@ const library = [
         longDescription:
           "Based on true events, this chilling novel tells the story of a young girl subjected to unimaginable abuse, both physical and psychological, by those who should have cared for her.",
         price: 19.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 78,
@@ -846,6 +915,7 @@ const library = [
         longDescription:
           "With his distinctive voice, Rolf Potts explains how to travel for extended periods without breaking the bank, offering tips on everything from budget travel to cultural immersion.",
         price: 18.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 82,
@@ -857,6 +927,7 @@ const library = [
         longDescription:
           "This captivating account tells the story of Christopher McCandless, who abandoned his conventional life to travel across the U.S. before heading into the wilds of Alaska, where his journey ended tragically.",
         price: 16.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 83,
@@ -868,6 +939,7 @@ const library = [
         longDescription:
           "Eric Weiner combines humor and introspection as he travels to countries known for their happiness, exploring cultural influences and personal insights into the pursuit of happiness.",
         price: 20.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 84,
@@ -879,6 +951,7 @@ const library = [
         longDescription:
           "With his signature wit and observational humor, Bryson recounts his journey on the Appalachian Trail, offering reflections on nature, human endurance, and the beauty of the American landscape.",
         price: 17.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 85,
@@ -890,6 +963,7 @@ const library = [
         longDescription:
           "This gripping tale follows a young traveler who stumbles upon a hidden beach in Thailand, where a secluded utopia awaits—until the cracks in paradise begin to show.",
         price: 19.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 86,
@@ -901,6 +975,7 @@ const library = [
         longDescription:
           "In this allegorical novel, Santiago, a shepherd, embarks on a journey from Spain to Egypt, seeking a treasure that will change his life forever, encountering spiritual and physical challenges along the way.",
         price: 14.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 87,
@@ -912,6 +987,7 @@ const library = [
         longDescription:
           "Cheryl Strayed's memoir chronicles her journey along the Pacific Crest Trail, where she sought healing after personal tragedy. Her account is raw, honest, and inspiring, touching on themes of resilience, loss, and self-discovery.",
         price: 18.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 88,
@@ -923,6 +999,7 @@ const library = [
         longDescription:
           "Bruce Chatwin's classic travelogue takes readers to the far reaches of Patagonia, a region in South America known for its wild, untamed beauty, as he delves into its history, culture, and fascinating characters.",
         price: 22.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 89,
@@ -934,6 +1011,7 @@ const library = [
         longDescription:
           "Jack Kerouac’s seminal work explores the quest for freedom and self-discovery through a series of road trips across America. The novel captures the restlessness and idealism of the 1950s counterculture, offering a raw and evocative portrait of life on the road.",
         price: 16.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
     ],
   },
@@ -951,6 +1029,7 @@ const library = [
         longDescription:
           "Mark Kurlansky traces the history of salt from ancient times to the present, revealing how this simple substance has influenced economics, politics, and culture across the world.",
         price: 18.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 91,
@@ -962,6 +1041,7 @@ const library = [
         longDescription:
           "Michael Pollan examines the journey of four meals, delving into the sourcing and production of food, the ethics of eating, and the environmental costs of modern food systems.",
         price: 22.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 92,
@@ -973,6 +1053,7 @@ const library = [
         longDescription:
           "In this candid memoir, Anthony Bourdain reveals the grit and grind of the culinary world, offering a raw and unfiltered account of life in professional kitchens.",
         price: 16.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 93,
@@ -984,6 +1065,7 @@ const library = [
         longDescription:
           "J. Kenji López-Alt breaks down the science behind cooking, explaining techniques and tips for achieving the best results with everyday ingredients and kitchen tools.",
         price: 29.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 94,
@@ -995,6 +1077,7 @@ const library = [
         longDescription:
           "First published in 1931, this classic cookbook has been a staple in American kitchens for generations, offering a wide array of recipes and practical cooking advice for home cooks of all skill levels.",
         price: 24.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 95,
@@ -1006,6 +1089,7 @@ const library = [
         longDescription:
           "Elizabeth Gilbert chronicles her year-long journey to find herself, with a particular focus on her experiences in Italy, where she discovers the joy of food and its role in personal growth and healing.",
         price: 18.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 96,
@@ -1017,6 +1101,7 @@ const library = [
         longDescription:
           "Chef Lior Lev Sercarz takes readers on a flavorful journey across the world, sharing the stories of spices, from their origins to their uses in cuisine, and the impact they have had on cultures worldwide.",
         price: 26.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 97,
@@ -1028,6 +1113,7 @@ const library = [
         longDescription:
           "In this thought-provoking book, Michael Pollan explores the art of cooking through the four classical elements—fire, water, air, and earth—delving into their transformative effects on food and human culture.",
         price: 21.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 98,
@@ -1039,6 +1125,7 @@ const library = [
         longDescription:
           "Michael Pollan distills his advice on healthy eating into 64 straightforward rules, encouraging readers to avoid processed foods, embrace traditional diets, and be mindful of their food choices.",
         price: 12.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 99,
@@ -1050,6 +1137,7 @@ const library = [
         longDescription:
           "In this enchanting novel, food becomes a powerful means of communication, with the protagonist's cooking reflecting her emotions and desires, while the novel weaves themes of love, tradition, and family.",
         price: 15.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
     ],
   },
@@ -1067,6 +1155,7 @@ const library = [
         longDescription:
           "David Epstein delves into the genetics, psychology, and environment behind the making of elite athletes, exploring the nature vs. nurture debate and what truly contributes to extraordinary athletic performance.",
         price: 18.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 101,
@@ -1077,6 +1166,7 @@ const library = [
         longDescription:
           "In this candid memoir, Andre Agassi opens up about his struggles, triumphs, and the mental and physical challenges of being one of the greatest tennis players in history.",
         price: 22.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 102,
@@ -1088,6 +1178,7 @@ const library = [
         longDescription:
           "In this intimate book, Kobe Bryant shares the mindset and philosophy that propelled him to five NBA championships, providing insights into his approach to training, competition, and life both on and off the court.",
         price: 24.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 103,
@@ -1098,6 +1189,7 @@ const library = [
         longDescription:
           "Rafael Nadal shares his personal story, offering a behind-the-scenes look at his tennis career, his family, and the challenges he has faced on his journey to becoming one of the greatest tennis players of all time.",
         price: 19.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 104,
@@ -1109,6 +1201,7 @@ const library = [
         longDescription:
           "Michael Lewis tells the story of the Oakland Athletics' use of data analytics to build a competitive baseball team on a limited budget, revolutionizing the way the sport is played and understood.",
         price: 15.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 105,
@@ -1120,6 +1213,7 @@ const library = [
         longDescription:
           "In this thrilling novel, a private investigator uncovers a web of deceit and scandal surrounding a famous sports figure's mysterious death, blending the world of sports with mystery and suspense.",
         price: 14.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 106,
@@ -1131,6 +1225,7 @@ const library = [
         longDescription:
           "Michael Lewis explores the story of Michael Oher, a homeless teenager who was adopted by a wealthy family and went on to play in the NFL, while also analyzing the evolution of the left tackle position in football.",
         price: 17.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 107,
@@ -1142,6 +1237,7 @@ const library = [
         longDescription:
           "David Halberstam offers an in-depth look at Michael Jordan's career, from his rise to stardom to his influence on the global popularity of basketball, examining his legacy and the impact he had on the world of sports.",
         price: 23.49,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 108,
@@ -1153,6 +1249,7 @@ const library = [
         longDescription:
           "In this powerful biography, Eric Blehm tells the story of Adam Brown, a Navy SEAL who overcame immense personal challenges and made the ultimate sacrifice for his country, highlighting his bravery and determination.",
         price: 19.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
       {
         id: 109,
@@ -1163,6 +1260,7 @@ const library = [
           "A guide to mastering the mental game of tennis and sports in general.",
         longDescription: `W. Timothy Gallwey's groundbreaking book teaches athletes how to focus their minds, manage stress, and unlock their full potential in tennis and any sport, using psychological principles to improve performance.`,
         price: 14.99,
+        image: 'http://localhost:8000/images/sample-book.png',
       },
     ],
   },
