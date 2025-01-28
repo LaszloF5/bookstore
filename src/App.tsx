@@ -10,14 +10,16 @@ import Horror from "./Components/Horror.tsx";
 import Travel from "./Components/Travel.tsx";
 import FoodAndDrink from "./Components/FoodAndDrink.tsx";
 import Sport from "./Components/Sport.tsx";
+import Cart from "./Components/Cart.tsx";
+import Order from "./Components/Order.tsx";
 import "./App.css";
 
 function App() {
-  const logo: string = "Logo";
   const books: string = "Books";
-  const header3: string = "Cart: items num and value";
   const [isActive, setActive] = useState<boolean>(false);
   const [searchedBook, setSearchedBook] = useState(null);
+  const [addedBooks, setAddedBooks] = useState([]);
+  const [addToCartAnimation, setAddToCartAnimation] = useState(false);
   const categories: string[] = [
     "All books",
     "history",
@@ -118,14 +120,27 @@ function App() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const bookName = formData.get("searchBook") as string;
-    const resultBook = allBooks.filter((book: Book) => book.name === bookName);
+    const resultBook = allBooks.filter(
+      (book: Book) => book.name === bookName || book.author === bookName
+    );
     console.log(resultBook);
     return setSearchedBook(resultBook);
   };
 
   const backFunction: Function = () => {
     setSearchedBook(null);
-  }
+  };
+
+  const addToCart = (id: number) => {
+    const currBook = allBooks.find((book: Book) => book.id === id);
+    setAddToCartAnimation(true);
+    setTimeout(() => {
+      setAddToCartAnimation(false);
+    }, 3500);
+    if (currBook) {
+      setAddedBooks([...addedBooks, currBook]);
+    }
+  };
 
   return (
     <div className="App">
@@ -133,11 +148,10 @@ function App() {
         <header className="App-header">
           <nav className="header-nav">
             <ul className="header-nav-ul">
-              <li>{logo}</li>
               <li>
                 <Link to="/">Home</Link>
               </li>
-              <li className="posRel" onClick={toggleCategories}>
+              <li onClick={toggleCategories}>
                 {books}{" "}
                 {
                   <ul
@@ -209,9 +223,18 @@ function App() {
                 </button>
               </form>
 
-              <li>{header3}</li>
+              <li>
+                <Link to="/cart">
+                  <img
+                    className="shopping-cart"
+                    src={process.env.PUBLIC_URL + "shopping-cart.png"}
+                    alt="cart"
+                  />
+                </Link>
+              </li>
             </ul>
           </nav>
+          <p className={`message-box ${addToCartAnimation ? 'animation' : ''}`}>Book added to the cart successfully!</p>
         </header>
         <Routes>
           <Route
@@ -222,7 +245,7 @@ function App() {
                   <h2 className="main-container_h2">All books</h2>
                   <main className="main-container">
                     <div className="books-container">
-                      {allBooks.map((book: any) => {
+                      {allBooks.map((book: Book) => {
                         return (
                           <div className="book-card" key={book.id}>
                             <h3 className="book-card_h4">{book.author}</h3>
@@ -235,8 +258,10 @@ function App() {
                             <p className="book-card_p">
                               {book.shortDescription}
                             </p>
-                            {/* <p>{book.longDescription}</p> Ezt majd csak kategóriánként lehet látni. */}
                             <p className="book-card_p">Price: {book.price} $</p>
+                            <button className="btn add-btn" onClick={() => addToCart(book.id)}>
+                              Add to cart
+                            </button>
                           </div>
                         );
                       })}
@@ -261,11 +286,24 @@ function App() {
                     </p>
                   </div>
                   <button onClick={backFunction}>Back</button>
+                  <button onClick={backFunction}>Add to cart</button>
                 </main>
               )
             }
           />
 
+          <Route
+            path="/cart"
+            element={
+              <Cart addedBooks={addedBooks} setAddedBooks={setAddedBooks} />
+            }
+          />
+          <Route
+            path="/order"
+            element={
+              <Order />
+            }
+          />
           <Route path="/history" element={<History books={historyBooks} />} />
           <Route path="/fantasy" element={<Fantasy books={fantasyBooks} />} />
           <Route
@@ -295,3 +333,15 @@ function App() {
 }
 
 export default App;
+
+/*
+  TODO:
+  - addToCart függvény átadása a gyermekkomponeneknek
+  - add to card btn a gyermekkomponenseknek
+  - back gomb a gyermekkomponenseknek
+  - borítók generálása
+  - kereső funkciót lehet kicsit át lehetne alakítani (in time keressen, és jelenítse meg? idk majd kiderül)
+  - responsive design
+  - árak kiemelése (bold)
+  
+*/

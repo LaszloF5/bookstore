@@ -33,4 +33,64 @@
   .book-card_p {
     padding: 5px;
   }
-  
+
+  /* BTN styles */
+
+  /* Általános gomb stílus */
+.btn {
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.continue-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.continue-btn:hover {
+  background-color: #218838;
+}
+
+.add-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.add-btn:hover {
+  background-color: #0056b3;
+}
+
+.remove-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.remove-btn:hover {
+  background-color: #c82333;
+}
+
+
+  /* Just the Card.tsx component stlye*/
+
+  .buy {
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .buy_h3 {
+    margin-top: 0;
+  }
+
+  /************************************/
