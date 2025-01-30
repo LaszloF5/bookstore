@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { HashRouter, Routes, Route, Link } from "react-router-dom";
 import History from "./Components/History.tsx";
 import Fantasy from "./Components/Fantasy.tsx";
@@ -20,6 +20,8 @@ function App() {
   const [searchedBook, setSearchedBook] = useState(null);
   const [addedBooks, setAddedBooks] = useState([]);
   const [addToCartAnimation, setAddToCartAnimation] = useState(false);
+
+
   const categories: string[] = [
     "All books",
     "history",
@@ -34,23 +36,7 @@ function App() {
     "sport",
   ];
 
-  const [allBooks, setAllBooks] = useState<(string | number)[]>([]);
-  const [historyBooks, setHistoryBooks] = useState<(string | number)[]>([]);
-  const [fantasyBooks, setFantasyBooks] = useState<(string | number)[]>([]);
-  const [thrillerBooks, setThrillerBooks] = useState<(string | number)[]>([]);
-  const [romanceBooks, setRomanceBooks] = useState<(string | number)[]>([]);
-  const [scienceFictionBooks, setScienceFictionBooks] = useState<
-    (string | number)[]
-  >([]);
-  const [historicalFictionBooks, setHistoricalFictionBooks] = useState<
-    (string | number)[]
-  >([]);
-  const [horrorBooks, setHorrorBooks] = useState<(string | number)[]>([]);
-  const [travelBooks, setTravelBooks] = useState<(string | number)[]>([]);
-  const [foodAndDrinkBooks, setFoodAndDrinkBooks] = useState<
-    (string | number)[]
-  >([]);
-  const [sportBooks, setSportBooks] = useState<(string | number)[]>([]);
+  const [allBooks, setAllBooks] = useState<(Book)[]>([]);
 
   const toggleCategories: Function = () => {
     setActive(!isActive);
@@ -79,34 +65,6 @@ function App() {
         }
         const getData: { books: Book[] }[] = await response.json();
         const resultBooks: Book[] = getData.flatMap((data) => data.books);
-        setHistoryBooks(
-          resultBooks.filter((book) => book.category === "history")
-        );
-        setFantasyBooks(
-          resultBooks.filter((book) => book.category === "fantasy")
-        );
-        setThrillerBooks(
-          resultBooks.filter((book) => book.category === "thriller")
-        );
-        setRomanceBooks(
-          resultBooks.filter((book) => book.category === "romance")
-        );
-        setScienceFictionBooks(
-          resultBooks.filter((book) => book.category === "science fiction")
-        );
-        setHistoricalFictionBooks(
-          resultBooks.filter((book) => book.category === "historical fiction")
-        );
-        setHorrorBooks(
-          resultBooks.filter((book) => book.category === "horror")
-        );
-        setTravelBooks(
-          resultBooks.filter((book) => book.category === "travel")
-        );
-        setFoodAndDrinkBooks(
-          resultBooks.filter((book) => book.category === "food and drink")
-        );
-        setSportBooks(resultBooks.filter((book) => book.category === "sport"));
         return setAllBooks(resultBooks);
       } catch {
         console.error("Error fetching books");
@@ -115,6 +73,48 @@ function App() {
     };
     getAllBooks();
   }, []);
+
+  // const [allBooks, setAllBooks] = useState<Book[]>([]);
+  
+  const historyBooks = useMemo(
+    () => allBooks.filter((book: Book) => book.category === "history"),
+    [allBooks]
+  );
+  const fantasyBooks = useMemo(
+    () => allBooks.filter((book: Book) => book.category === "fantasy"),
+    [allBooks]
+  );
+  const thrillerBooks = useMemo(
+    () => allBooks.filter((book: Book) => book.category === "thriller"),
+    [allBooks]
+  );
+  const romanceBooks = useMemo(
+    () => allBooks.filter((book: Book) => book.category === "romance"),
+    [allBooks]
+  );
+  const scienceFictionBooks = useMemo(
+    () => allBooks.filter((book: Book) => book.category === "science fiction"),
+    [allBooks]
+  );
+  const historicalFictionBooks = useMemo(
+    () => allBooks.filter((book: Book) => book.category === "historical fiction"),
+    [allBooks]
+  );
+  const horrorBooks = useMemo(
+    () => allBooks.filter((book: Book) => book.category === "horror"),
+    [allBooks]
+  );
+  const travelBooks = useMemo(
+    () => allBooks.filter((book: Book) => book.category === "travel"),
+    [allBooks]
+  );
+  const foodAndDrinkBooks = useMemo(
+    () => allBooks.filter((book: Book) => book.category === "food and drink"),
+    [allBooks]
+  );
+  const sportBooks = useMemo(() => {
+    allBooks.filter((book: Book) => book.category === "sport");
+  }, [allBooks])
 
   const searchBook = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -224,12 +224,13 @@ function App() {
               </form>
 
               <li>
-                <Link to="/cart">
+                <Link to="/cart" className="flex">
                   <img
                     className="shopping-cart"
                     src={process.env.PUBLIC_URL + "shopping-cart.png"}
                     alt="cart"
                   />
+                  {addedBooks.length > 0 && <span className="item-counter">{addedBooks.length}</span>}
                 </Link>
               </li>
             </ul>
@@ -258,8 +259,8 @@ function App() {
                             <p className="book-card_p">
                               {book.shortDescription}
                             </p>
-                            <p className="book-card_p">Price: {book.price} $</p>
-                            <button className="btn add-btn" onClick={() => addToCart(book.id)}>
+                            <p className="book-card_price">Price: {book.price} $</p>
+                            <button className="btn book-card_btn add-btn" onClick={() => addToCart(book.id)}>
                               Add to cart
                             </button>
                           </div>
@@ -335,6 +336,9 @@ function App() {
 export default App;
 
 /*
+  Kész:
+  - 1 kis szánlálót beépíteni a cart-hoz, hogy mutassa a hozzáadott tételek számát.
+
   TODO:
   - addToCart függvény átadása a gyermekkomponeneknek
   - add to card btn a gyermekkomponenseknek
@@ -343,5 +347,6 @@ export default App;
   - kereső funkciót lehet kicsit át lehetne alakítani (in time keressen, és jelenítse meg? idk majd kiderül)
   - responsive design
   - árak kiemelése (bold)
-  
+  - egységesíteni a book-card méreteit (pl heading, leírás stb, hogy ne legyenek egymástól elcsúszva az elemek vízszintesen.)
+  - A hosszú leírásnál nembiztos h jól kifogja adni az add to cart.
 */
