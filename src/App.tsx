@@ -21,7 +21,6 @@ function App() {
   const [addedBooks, setAddedBooks] = useState([]);
   const [addToCartAnimation, setAddToCartAnimation] = useState(false);
 
-
   const categories: string[] = [
     "All books",
     "history",
@@ -36,7 +35,7 @@ function App() {
     "sport",
   ];
 
-  const [allBooks, setAllBooks] = useState<(Book)[]>([]);
+  const [allBooks, setAllBooks] = useState<Book[]>([]);
 
   const toggleCategories: Function = () => {
     setActive(!isActive);
@@ -75,7 +74,7 @@ function App() {
   }, []);
 
   // const [allBooks, setAllBooks] = useState<Book[]>([]);
-  
+
   const historyBooks = useMemo(
     () => allBooks.filter((book: Book) => book.category === "history"),
     [allBooks]
@@ -97,7 +96,8 @@ function App() {
     [allBooks]
   );
   const historicalFictionBooks = useMemo(
-    () => allBooks.filter((book: Book) => book.category === "historical fiction"),
+    () =>
+      allBooks.filter((book: Book) => book.category === "historical fiction"),
     [allBooks]
   );
   const horrorBooks = useMemo(
@@ -112,9 +112,10 @@ function App() {
     () => allBooks.filter((book: Book) => book.category === "food and drink"),
     [allBooks]
   );
-  const sportBooks = useMemo(() => {
-    allBooks.filter((book: Book) => book.category === "sport");
-  }, [allBooks])
+  const sportBooks = useMemo(
+    () => allBooks.filter((book: Book) => book.category === "sport"),
+    [allBooks]
+  );
 
   const searchBook = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -138,7 +139,8 @@ function App() {
       setAddToCartAnimation(false);
     }, 3500);
     if (currBook) {
-      setAddedBooks([...addedBooks, currBook]);
+      setAddedBooks((prevBooks) => [...prevBooks, currBook]);
+      console.log("Added books: ", addedBooks);
     }
   };
 
@@ -230,12 +232,16 @@ function App() {
                     src={process.env.PUBLIC_URL + "shopping-cart.png"}
                     alt="cart"
                   />
-                  {addedBooks.length > 0 && <span className="item-counter">{addedBooks.length}</span>}
+                  {addedBooks.length > 0 && (
+                    <span className="item-counter">{addedBooks.length}</span>
+                  )}
                 </Link>
               </li>
             </ul>
           </nav>
-          <p className={`message-box ${addToCartAnimation ? 'animation' : ''}`}>Book added to the cart successfully!</p>
+          <p className={`message-box ${addToCartAnimation ? "animation" : ""}`}>
+            Book added to the cart successfully!
+          </p>
         </header>
         <Routes>
           <Route
@@ -259,8 +265,13 @@ function App() {
                             <p className="book-card_p">
                               {book.shortDescription}
                             </p>
-                            <p className="book-card_price">Price: {book.price} $</p>
-                            <button className="btn book-card_btn add-btn" onClick={() => addToCart(book.id)}>
+                            <p className="book-card_price">
+                              Price: {book.price} $
+                            </p>
+                            <button
+                              className="btn book-card_btn add-btn"
+                              onClick={() => addToCart(book.id)}
+                            >
                               Add to cart
                             </button>
                           </div>
@@ -299,34 +310,107 @@ function App() {
               <Cart addedBooks={addedBooks} setAddedBooks={setAddedBooks} />
             }
           />
+          <Route path="/order" element={<Order />} />
           <Route
-            path="/order"
+            path="/history"
             element={
-              <Order />
+              <History
+                books={historyBooks}
+                addToCart={addToCart}
+                className="bigger-card"
+              />
             }
           />
-          <Route path="/history" element={<History books={historyBooks} />} />
-          <Route path="/fantasy" element={<Fantasy books={fantasyBooks} />} />
+          <Route
+            path="/fantasy"
+            element={
+              <Fantasy
+                books={fantasyBooks}
+                addToCart={addToCart}
+                className="bigger-card"
+              />
+            }
+          />
           <Route
             path="/thriller"
-            element={<Thriller books={thrillerBooks} />}
+            element={
+              <Thriller
+                books={thrillerBooks}
+                addToCart={addToCart}
+                className="bigger-card"
+              />
+            }
           />
-          <Route path="/romance" element={<Romance books={romanceBooks} />} />
+          <Route
+            path="/romance"
+            element={
+              <Romance
+                books={romanceBooks}
+                addToCart={addToCart}
+                className="bigger-card"
+              />
+            }
+          />
           <Route
             path="/science fiction"
-            element={<ScienceFiction books={scienceFictionBooks} />}
+            element={
+              <ScienceFiction
+                books={scienceFictionBooks}
+                addToCart={addToCart}
+                className="bigger-card"
+              />
+            }
           />
           <Route
             path="/historical fiction"
-            element={<HistoricalFiction books={historicalFictionBooks} />}
+            element={
+              <HistoricalFiction
+                books={historicalFictionBooks}
+                addToCart={addToCart}
+                className="bigger-card"
+              />
+            }
           />
-          <Route path="/horror" element={<Horror books={horrorBooks} />} />
-          <Route path="/travel" element={<Travel books={travelBooks} />} />
+          <Route
+            path="/horror"
+            element={
+              <Horror
+                books={horrorBooks}
+                addToCart={addToCart}
+                className="bigger-card"
+              />
+            }
+          />
+          <Route
+            path="/travel"
+            element={
+              <Travel
+                books={travelBooks}
+                addToCart={addToCart}
+                className="bigger-card"
+              />
+            }
+          />
           <Route
             path="/food and drink"
-            element={<FoodAndDrink books={foodAndDrinkBooks} />}
+            element={
+              <FoodAndDrink
+                books={foodAndDrinkBooks}
+                addToCart={addToCart}
+                className="bigger-card"
+              />
+            }
           />
-          <Route path="/sport" element={<Sport books={sportBooks} />} />
+          <Route
+            path="/sport"
+            element={
+              <Sport
+                books={sportBooks}
+                addToCart={addToCart}
+                className="bigger-card"
+              />
+            }
+          />
         </Routes>
       </HashRouter>
     </div>
@@ -337,16 +421,18 @@ export default App;
 
 /*
   Kész:
-  - 1 kis szánlálót beépíteni a cart-hoz, hogy mutassa a hozzáadott tételek számát.
+  - 1 kis számlálót beépíteni a cart-hoz, hogy mutassa a hozzáadott tételek számát.
+  - add to card btn a gyermekkomponenseknek
+  - egységesíteni a book-card méreteit (pl heading, leírás stb, hogy ne legyenek egymástól elcsúszva az elemek vízszintesen.)
+  - A hosszú leírásnál nembiztos h jól kifogja adni az add to cart. (megoldva);
+  - árak kiemelése (bold)
 
   TODO:
   - addToCart függvény átadása a gyermekkomponeneknek
-  - add to card btn a gyermekkomponenseknek
   - back gomb a gyermekkomponenseknek
   - borítók generálása
   - kereső funkciót lehet kicsit át lehetne alakítani (in time keressen, és jelenítse meg? idk majd kiderül)
   - responsive design
-  - árak kiemelése (bold)
-  - egységesíteni a book-card méreteit (pl heading, leírás stb, hogy ne legyenek egymástól elcsúszva az elemek vízszintesen.)
-  - A hosszú leírásnál nembiztos h jól kifogja adni az add to cart.
+  - scrolltotop button
+  - bg img
 */

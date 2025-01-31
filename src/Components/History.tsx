@@ -15,16 +15,19 @@ interface Book {
 
 interface BookListProps {
   books: Book[];
+  addToCart: Function;
+  className: string;
+
 }
 
-const History: React.FC<BookListProps> = ({ books }) => {
+const History: React.FC<BookListProps> = ({ books, addToCart, className }) => {
   return (
     <main className="main-container">
       <h2>History Books</h2>
       <div className="books-container">
         {books.map((book: Book) => {
           return (
-            <div className="book-card" key={book.id}>
+            <div className={`book-card ${className}`} key={book.id}>
               <h3 className="book-card_h4">{book.author}</h3>
               <h4 className="book-card_h3">{book.name}</h4>
               <img
@@ -34,6 +37,12 @@ const History: React.FC<BookListProps> = ({ books }) => {
               />
               <p className="book-card_p">{book.longDescription}</p>
               <p className="book-card_p">Price: {book.price} $</p>
+              <button
+                className="btn book-card_btn add-btn"
+                onClick={() => addToCart(book.id)}
+              >
+                Add to cart
+              </button>
             </div>
           );
         })}
