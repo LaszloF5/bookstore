@@ -404,8 +404,10 @@ export default App;
   - scrolltotop button
   - responsive design
   - kereső funkció átalakítása
-
-  TODO:
   - borítók generálása
+  
+  TODO:
   - bg img
+  - megrendelési űrlapot reszponzívvá tenni.
+
 */

@@ -165,6 +165,7 @@ p {
   bottom: 20px;
   right: 20px;
   cursor: pointer;
+  z-index: 10;
 }
 
 .hamburger-icon {
@@ -305,6 +306,12 @@ p {
   .search-book-form_button {
     margin-right: 10px;
   }
+}
+
+@media screen and (max-width: 768px) {
+  .top-arrow {
+    right: 5px;
+   }
 }
 
 @media screen and (max-width: 630px) {
