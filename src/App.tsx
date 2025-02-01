@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { HashRouter, Routes, Route, Link } from "react-router-dom";
+import Header from "./Components/Header.tsx";
 import History from "./Components/History.tsx";
 import Fantasy from "./Components/Fantasy.tsx";
 import Thriller from "./Components/Thriller.tsx";
@@ -15,7 +16,6 @@ import Order from "./Components/Order.tsx";
 import "./App.css";
 
 function App() {
-  const books: string = "Books";
   const [isActive, setActive] = useState<boolean>(false);
   const [searchedBook, setSearchedBook] = useState(null);
   const [addedBooks, setAddedBooks] = useState([]);
@@ -124,10 +124,14 @@ function App() {
     const resultBook = allBooks.filter(
       (book: Book) => book.name === bookName || book.author === bookName
     );
-    console.log(resultBook);
-    return setSearchedBook(resultBook);
+    if (resultBook.length > 0) {
+      e.target.searchBook.value = '';
+      return setSearchedBook(resultBook);
+    } else {
+      alert("A keresett könyv nem található.");
+      e.target.searchBook.value = '';
+    }
   };
-
   const backFunction: Function = () => {
     setSearchedBook(null);
   };
@@ -139,110 +143,73 @@ function App() {
       setAddToCartAnimation(false);
     }, 3500);
     if (currBook) {
-      setAddedBooks((prevBooks) => [...prevBooks, currBook]);
-      console.log("Added books: ", addedBooks);
+      setAddedBooks((prevBooks) => {
+        const existingBook = prevBooks.find((book) => book.id === id);
+        if (existingBook) {
+          return prevBooks.map((book) =>
+            book.id === id
+              ? {
+                  ...book,
+                  quantity: (book.quantity || 1) + 1,
+                  pay: (book.pay || book.price) + book.price,
+                }
+              : book
+          );
+        } else {
+          return [
+            ...prevBooks,
+            { ...currBook, quantity: 1, pay: currBook.price },
+          ];
+        }
+      });
     }
   };
 
-  return (
-    <div className="App">
-      <HashRouter>
-        <header className="App-header">
-          <nav className="header-nav">
-            <ul className="header-nav-ul">
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li onClick={toggleCategories}>
-                {books}{" "}
-                {
-                  <ul
-                    className={`categories-ul ${
-                      isActive ? "visible" : "hidden"
-                    }`}
-                  >
-                    <li>
-                      <Link to="/">All books</Link>
-                    </li>
-                    <li>
-                      <Link to="/history">History</Link>
-                    </li>
-                    <li>
-                      <Link to="/fantasy">Fantasy</Link>
-                    </li>
-                    <li>
-                      <Link to="/thriller">Thriller</Link>
-                    </li>
-                    <li>
-                      <Link to="/romance">Romance</Link>
-                    </li>
-                    <li>
-                      <Link to="/science%20fiction">Science fiction</Link>
-                    </li>
-                    <li>
-                      <Link to="/historical%20fiction">Historical fiction</Link>
-                    </li>
-                    <li>
-                      <Link to="/horror">Horror</Link>
-                    </li>
-                    <li>
-                      <Link to="/travel">Travel</Link>
-                    </li>
-                    <li>
-                      <Link to="/food%20and%20drink">Food and drink</Link>
-                    </li>
-                    <li>
-                      <Link to="/sport">Sport</Link>
-                    </li>
-                  </ul>
-                }
-              </li>
-              <form
-                action="#"
-                method="POST"
-                className="search-book-form"
-                onSubmit={searchBook}
-              >
-                <label
-                  htmlFor="search-book-id"
-                  className="search-book-form_label"
-                >
-                  <input
-                    type="text"
-                    name="searchBook"
-                    id="search-book-id"
-                    placeholder="Search a book"
-                    required
-                    className="search-book-form_input"
-                  />
-                </label>
-                <button type="submit" className="search-book-form_button">
-                  <img
-                    src={process.env.PUBLIC_URL + "/search-icon.png"}
-                    alt="search icon"
-                    className="search-icon"
-                  />
-                </button>
-              </form>
+  const [isVisibleArrow, setIsVisibleArrow] = useState(false);
 
-              <li>
-                <Link to="/cart" className="flex">
-                  <img
-                    className="shopping-cart"
-                    src={process.env.PUBLIC_URL + "shopping-cart.png"}
-                    alt="cart"
-                  />
-                  {addedBooks.length > 0 && (
-                    <span className="item-counter">{addedBooks.length}</span>
-                  )}
-                </Link>
-              </li>
-            </ul>
-          </nav>
-          <p className={`message-box ${addToCartAnimation ? "animation" : ""}`}>
-            Book added to the cart successfully!
-          </p>
-        </header>
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsVisibleArrow(true);
+      } else {
+        setIsVisibleArrow(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    <HashRouter>
+      <div className="App">
+        <Header
+          toggleCategories={toggleCategories}
+          isActive={isActive}
+          addedBooks={addedBooks}
+          searchBook={searchBook}
+        />
+        {isVisibleArrow && (
+          <img
+            onClick={scrollToTop}
+            className="top-arrow"
+            src={process.env.PUBLIC_URL + "blue-top-arrow.png"}
+            alt="Top arrow icon"
+          />
+        )}
+        <p className={`message-box ${addToCartAnimation ? "animation" : ""}`}>
+          Book added to the cart successfully!
+        </p>
         <Routes>
           <Route
             path="/"
@@ -297,8 +264,15 @@ function App() {
                       Price: {searchedBook[0].price} $
                     </p>
                   </div>
-                  <button onClick={backFunction}>Back</button>
-                  <button onClick={backFunction}>Add to cart</button>
+                  <button className="btn back-btn" onClick={backFunction}>
+                    Back
+                  </button>
+                  <button
+                    className="btn add-btn"
+                    onClick={() => addToCart(searchedBook[0].id)}
+                  >
+                    Add to cart
+                  </button>
                 </main>
               )
             }
@@ -412,8 +386,8 @@ function App() {
             }
           />
         </Routes>
-      </HashRouter>
-    </div>
+      </div>
+    </HashRouter>
   );
 }
 
@@ -426,13 +400,12 @@ export default App;
   - egységesíteni a book-card méreteit (pl heading, leírás stb, hogy ne legyenek egymástól elcsúszva az elemek vízszintesen.)
   - A hosszú leírásnál nembiztos h jól kifogja adni az add to cart. (megoldva);
   - árak kiemelése (bold)
+  - addToCart függvény átadása a gyermekkomponeneknek
+  - scrolltotop button
+  - responsive design
+  - kereső funkció átalakítása
 
   TODO:
-  - addToCart függvény átadása a gyermekkomponeneknek
-  - back gomb a gyermekkomponenseknek
   - borítók generálása
-  - kereső funkciót lehet kicsit át lehetne alakítani (in time keressen, és jelenítse meg? idk majd kiderül)
-  - responsive design
-  - scrolltotop button
   - bg img
 */
