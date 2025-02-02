@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { HashRouter, Routes, Route, Link } from "react-router-dom";
+import {
+  HashRouter,
+  Routes,
+  Route,
+  Link,
+  Navigate,
+} from "react-router-dom";
 import Header from "./Components/Header.tsx";
 import History from "./Components/History.tsx";
 import Fantasy from "./Components/Fantasy.tsx";
@@ -18,22 +24,12 @@ import "./App.css";
 function App() {
   const [isActive, setActive] = useState<boolean>(false);
   const [searchedBook, setSearchedBook] = useState(null);
-  const [addedBooks, setAddedBooks] = useState([]);
-  const [addToCartAnimation, setAddToCartAnimation] = useState(false);
+  const [addedBooks, setAddedBooks] = useState<Book[]>(() => {
+    const storedBooks = sessionStorage.getItem("books");
+    return storedBooks ? JSON.parse(storedBooks) : [];
+  });
 
-  const categories: string[] = [
-    "All books",
-    "history",
-    "fantasy",
-    "thriller",
-    "romance",
-    "science fiction",
-    "historical fiction",
-    "horror",
-    "travel",
-    "food and drink",
-    "sport",
-  ];
+  const [addToCartAnimation, setAddToCartAnimation] = useState(false);
 
   const [allBooks, setAllBooks] = useState<Book[]>([]);
 
@@ -54,26 +50,28 @@ function App() {
   }
 
   useEffect(() => {
-    // Get all books
     const getAllBooks = async (): Promise<Book[]> => {
       const url = "http://localhost:8000/library";
       try {
         const response = await fetch(url);
         if (!response.ok) {
-          throw new Error(`Hiba a lekérdezés során: ${response.status}`);
+          throw new Error(`Error while fetching data: ${response.status}`);
         }
         const getData: { books: Book[] }[] = await response.json();
         const resultBooks: Book[] = getData.flatMap((data) => data.books);
         return setAllBooks(resultBooks);
       } catch {
-        console.error("Error fetching books");
+        console.error("Error while fetching data.");
         return [];
       }
     };
     getAllBooks();
   }, []);
 
-  // const [allBooks, setAllBooks] = useState<Book[]>([]);
+  useEffect(() => {
+    const storedBooks = sessionStorage.getItem("books");
+    setAddedBooks(storedBooks ? JSON.parse(storedBooks) : []);
+  }, []);
 
   const historyBooks = useMemo(
     () => allBooks.filter((book: Book) => book.category === "history"),
@@ -125,15 +123,16 @@ function App() {
       (book: Book) => book.name === bookName || book.author === bookName
     );
     if (resultBook.length > 0) {
-      e.target.searchBook.value = '';
+      e.target.searchBook.value = "";
       return setSearchedBook(resultBook);
     } else {
       alert("A keresett könyv nem található.");
-      e.target.searchBook.value = '';
+      e.target.searchBook.value = "";
     }
   };
   const backFunction: Function = () => {
     setSearchedBook(null);
+    setIsCurrentBook(false);
   };
 
   const addToCart = (id: number) => {
@@ -163,6 +162,41 @@ function App() {
         }
       });
     }
+  };
+
+  useEffect(() => {
+    sessionStorage.setItem("books", JSON.stringify(addedBooks));
+  }, [addedBooks]);
+
+  const [currentAuthor, setCurrentAuthor] = useState<string>("");
+  const [currentId, setCurrentId] = useState<number>(0);
+  const [currentCategory, setCurrentCategory] = useState<string>("");
+  const [currentName, setCurrentName] = useState<string>("");
+  const [currentLongDescription, setCurrentLongDescription] =
+    useState<string>("");
+  const [currentPrice, setCurrentPrice] = useState<number>(0);
+  const [currentImg, setCurrentImg] = useState<string>("");
+  const [isCurrentBook, setIsCurrentBook] = useState<boolean>(false);
+
+  const renderOnlyOne = (id: number) => {
+    const currentBook = allBooks.find((book: Book) => book.id === id);
+    if (currentBook) {
+      setCurrentAuthor(currentBook.author);
+      setCurrentId(currentBook.id);
+      setCurrentCategory(currentBook.category);
+      setCurrentName(currentBook.name);
+      setCurrentLongDescription(currentBook.longDescription);
+      setCurrentPrice(currentBook.price);
+      setCurrentImg(currentBook.image);
+      setIsCurrentBook(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      alert("something went wrong");
+    }
+  };
+
+  const isSuccessfulOrder = () => {
+    setAddedBooks([]);
   };
 
   const [isVisibleArrow, setIsVisibleArrow] = useState(false);
@@ -207,45 +241,126 @@ function App() {
             alt="Top arrow icon"
           />
         )}
-        <p className={`message-box ${addToCartAnimation ? "animation" : ""}`}>
-          Book added to the cart successfully!
-        </p>
+        <Link to="/cart">
+          <p className={`message-box ${addToCartAnimation ? "animation" : ""}`}>
+            Book added to the cart successfully!
+          </p>
+        </Link>
         <Routes>
           <Route
             path="/"
             element={
               searchedBook === null ? (
                 <>
-                  <h2 className="main-container_h2">All books</h2>
-                  <main className="main-container">
-                    <div className="books-container">
-                      {allBooks.map((book: Book) => {
-                        return (
-                          <div className="book-card" key={book.id}>
-                            <h3 className="book-card_h4">{book.author}</h3>
-                            <h4 className="book-card_h3">{book.name}</h4>
-                            <img
-                              className="book-card_img"
-                              src={book.image}
-                              alt="Book front side"
-                            />
-                            <p className="book-card_p">
-                              {book.shortDescription}
-                            </p>
-                            <p className="book-card_price">
-                              Price: {book.price} $
-                            </p>
-                            <button
-                              className="btn book-card_btn add-btn"
-                              onClick={() => addToCart(book.id)}
-                            >
-                              Add to cart
-                            </button>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </main>
+                  {isCurrentBook === false ? (
+                    <>
+                      <img
+                        className="bg-img"
+                        src={process.env.PUBLIC_URL + "Bookstore-bg.png"}
+                        alt="bookstore"
+                      />
+                      <img
+                        className="small-bg-img"
+                        src={process.env.PUBLIC_URL + "mobile-size-bg.png"}
+                        alt="bookstore"
+                      />
+                      <h2 className="main-container_h2">All books</h2>
+                      <main className="main-container">
+                        <div className="books-container">
+                          {allBooks.map((book: Book) => {
+                            return (
+                              <div className="book-card" key={book.id}>
+                                <h3 className="book-card_h4">{book.author}</h3>
+                                <h4 className="book-card_h3">{book.name}</h4>
+                                <img
+                                  className="book-card_img"
+                                  src={book.image}
+                                  alt="Book front side"
+                                  onClick={() => renderOnlyOne(book.id)}
+                                />
+                                <p className="book-card_p">
+                                  {book.shortDescription}
+                                </p>
+                                <p className="book-card_price">
+                                  Price: {book.price} $
+                                </p>
+                                <button
+                                  className="btn book-card_btn add-btn"
+                                  onClick={() => addToCart(book.id)}
+                                >
+                                  Add to cart
+                                </button>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </main>
+                    </>
+                  ) : (
+                    <main className="main-container">
+                      <div
+                        className="book-card unique-book"
+                        key={currentAuthor}
+                      >
+                        <h3 className="book-card_h4">{currentAuthor}</h3>
+                        <h4 className="book-card_h3">{currentName}</h4>
+                        <img
+                          className="book-card_img"
+                          src={currentImg}
+                          alt="Book front side"
+                        />
+                        <p className="book-card_p">
+                          Category: {currentCategory}
+                        </p>
+                        <p className="book-card_p">{currentLongDescription}</p>
+                        <p className="book-card_price">
+                          Price: {currentPrice} $
+                        </p>
+                        <button className="btn back-btn" onClick={backFunction}>
+                          Back
+                        </button>
+                        <button
+                          className="btn book-card_btn add-btn"
+                          onClick={() => addToCart(currentId)}
+                        >
+                          Add to cart
+                        </button>
+                      </div>
+                      <h3>May this interest you</h3>
+                      <div className="other-books">
+                        {allBooks
+                          .filter(
+                            (book: Book) =>
+                              book.category === currentCategory &&
+                              book.id !== currentId
+                          )
+                          .slice(0, 3)
+                          .map((book: Book) => {
+                            return (
+                              <div className="small-book-card" key={book.id}>
+                                <h3 className="small-book-card_h4">
+                                  {book.author}
+                                </h3>
+                                <h4 className="small-book-card_h3">
+                                  {book.name}
+                                </h4>
+                                <img
+                                  className="small-book-card_img"
+                                  src={book.image}
+                                  alt="Book front side"
+                                />
+                                <button
+                                  className="continue-btn btn"
+                                  onClick={() => renderOnlyOne(book.id)}
+                                >
+                                  Show me!
+                                </button>
+                              </div>
+                            );
+                          })}
+                      </div>
+                    </main>
+                  )}
                 </>
               ) : (
                 <main className="main-container">
@@ -277,14 +392,22 @@ function App() {
               )
             }
           />
-
           <Route
             path="/cart"
             element={
               <Cart addedBooks={addedBooks} setAddedBooks={setAddedBooks} />
             }
           />
-          <Route path="/order" element={<Order />} />
+          <Route
+            path="/order"
+            element={
+              addedBooks.length > 0 ? (
+                <Order isSuccessfulOrder={isSuccessfulOrder} />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
+          />
           <Route
             path="/history"
             element={
@@ -405,9 +528,12 @@ export default App;
   - responsive design
   - kereső funkció átalakítása
   - borítók generálása
+  - megrendelési űrlapot reszponzívvá tenni.
+  - bg img
+  - képre kattintáskor külön megjelenik a könyv részletekkel.
+  - csak a book legyen pointer.
+  - amikor csak 1 könyv jelenik meg, a részletekkel, akkor alatta ugyanabból a kategóriából még pár megjelenhet, pl író cím kép kombinációval, és az is kattintható lesz.
+  - az oldal újratöltésénél kiürül a kosár, erre figyelmeztetés. Nem, --> sessionStorage
   
   TODO:
-  - bg img
-  - megrendelési űrlapot reszponzívvá tenni.
-
 */

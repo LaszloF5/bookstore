@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./childCompStyle.css";
 
@@ -35,7 +35,7 @@ const Cart: React.FC<addedBooksProps> = ({ addedBooks, setAddedBooks }) => {
     const updatedBooks = (prevBooks) =>
       prevBooks.map((book) =>
         book.id === minusQty.id
-          ? { ...book, quantity: -1, pay: book.pay - book.price }
+          ? { ...book, quantity: book.quantity - 1, pay: book.pay - book.price }
           : book
       );
     setAddedBooks(updatedBooks);
@@ -44,6 +44,10 @@ const Cart: React.FC<addedBooksProps> = ({ addedBooks, setAddedBooks }) => {
   const moveToOrder = () => {
     navigate("/order", { state: { addedBooks } });
   };
+
+  const backtoTheBooks = () => {
+    navigate('/');
+  }
 
   return (
     <main className="main-container">
@@ -94,9 +98,14 @@ const Cart: React.FC<addedBooksProps> = ({ addedBooks, setAddedBooks }) => {
         {addedBooks.length === 0 ? (
           ""
         ) : (
-          <button className="btn continue-btn" onClick={moveToOrder}>
-            Continue
-          </button>
+          <>
+            <button className="btn continue-btn" onClick={moveToOrder}>
+              Continue
+            </button>
+            <button className="btn add-btn margin-btn" onClick={backtoTheBooks}>
+            Back to the books
+            </button>
+          </>
         )}
       </div>
     </main>

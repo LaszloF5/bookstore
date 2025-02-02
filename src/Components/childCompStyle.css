@@ -30,6 +30,10 @@
   display: inline-block;
 }
 
+.small-btn {
+  padding: 6px 10px;
+}
+
 .btn:hover {
   opacity: 0.9;
 }
@@ -63,6 +67,10 @@
 
 .back-btn {
   background-color: #F4A261;
+}
+
+.margin-btn {
+  margin-top: 10px;
 }
 
 
