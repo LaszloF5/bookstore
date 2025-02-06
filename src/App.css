@@ -69,7 +69,7 @@ body {
   align-items: center;
   justify-content: center;
   list-style-type: none;
-  top: 5vh;
+  top: 50px;
   right: 0;
   opacity: 0;
   transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
@@ -170,14 +170,13 @@ p {
 }
 
 .main-container {
-  min-height: calc(100vh-50px);
+  min-height: calc(100vh - 50px);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .other-books {
-  min-height: calc(100vh-50px);
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -244,7 +243,7 @@ p {
 }
 
 .bigger-card {
-  height: 650px;
+  height: 660px;
 }
 
 .book-card_h3 {
@@ -278,6 +277,12 @@ p {
 .book-card_btn {
   position: absolute;
   bottom: 5px;
+  left: calc(50% - 62.225px);
+}
+
+.book-card_btn-show-me {
+  position: absolute;
+  bottom: 55px;
   left: calc(50% - 62.225px);
 }
 

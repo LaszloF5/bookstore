@@ -3,11 +3,12 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./Order.css";
 
-interface orderProps {
-  isSuccess: Function;
+interface setOrdered {
+  ordered: Boolean;
+  setOrdered: Boolean;
 }
 
-const Order: React.FC<orderProps> = ({ isSuccessfulOrder }) => {
+const Order: React.FC<setOrdered> = ({ordered, setOrdered}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const addedBooks = location.state?.addedBooks || [];
@@ -30,11 +31,15 @@ const Order: React.FC<orderProps> = ({ isSuccessfulOrder }) => {
   const [visibleMessage, setVisibleMessage] = useState(false);
   const orderMessage = "Your order has been created successfully!";
 
-  const handleOrder = (e: React.MouseEvent) => {
+  const handleOrder = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Lefutottam.");
     setVisibleMessage(true);
-    isSuccessfulOrder();
-    setTimeout(() => navigate("/"), 3000);
+    sessionStorage.removeItem("books");
+    setTimeout(() => {
+      navigate("/");
+      setOrdered(!ordered)
+    }, 3000);
   };
 
   return (
@@ -108,8 +113,9 @@ const Order: React.FC<orderProps> = ({ isSuccessfulOrder }) => {
             type="text"
             id="zip-code"
             name="zip-code"
+            pattern="^\d[0-9]+$"
             required
-            placeholder="Enter your ZIP/Postal Code"
+            placeholder="1010"
             className="form-input"
             autoComplete="off"
           />
@@ -121,13 +127,14 @@ const Order: React.FC<orderProps> = ({ isSuccessfulOrder }) => {
             type="tel"
             id="phone"
             name="phone"
+            pattern="^\+\d{7,15}$"
             required
-            placeholder="Enter your phone number"
+            placeholder="+12341234567"
             className="form-input"
             autoComplete="off"
           />
 
-          <label htmlFor="data-m" className="form-label">
+          <label htmlFor="data-m" className="form-label select-none">
             I have read and understood the{" "}
             <a href="#" target="_blank" rel="noopener noreferrer">
               Data Management Information
@@ -143,7 +150,7 @@ const Order: React.FC<orderProps> = ({ isSuccessfulOrder }) => {
             autoComplete="off"
           />
 
-          <label htmlFor="gen-terms" className="form-label">
+          <label htmlFor="gen-terms" className="form-label select-none">
             I have read and acknowledged the General Terms and Conditions.
           </label>
           <input
@@ -162,11 +169,7 @@ const Order: React.FC<orderProps> = ({ isSuccessfulOrder }) => {
       )}
 
       {paymentMethodIsVisible && (
-        <form
-          className="payment-info-form"
-          method="POST"
-          onSubmit={handleOrder}
-        >
+        <form className="payment-info-form" onSubmit={handleOrder}>
           <h2>Payment Information</h2>
           <label htmlFor="payment-method" className="form-label">
             Payment Method:
@@ -186,7 +189,7 @@ const Order: React.FC<orderProps> = ({ isSuccessfulOrder }) => {
               Number(deliveryFee)}{" "}
             $
           </p>
-          <button type="submit" value="Order" className="form-submit">
+          <button type="submit" className="form-submit">
             Order
           </button>
         </form>

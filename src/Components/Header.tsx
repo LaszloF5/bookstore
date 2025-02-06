@@ -6,6 +6,7 @@ export default function Header ({
     isActive,
     addedBooks,
     searchBook,
+    deleteSearchResult,
 })
 {
      const navigate = useNavigate();
@@ -14,7 +15,7 @@ export default function Header ({
         <nav className="header-nav">
           <ul className="header-nav-ul">
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/" onClick={deleteSearchResult}>Home</Link>
             </li>
             <li onClick={toggleCategories} className='header-nav-ul_li unique-li'>
               {/* <a href="#">Books</a> */}
@@ -26,37 +27,37 @@ export default function Header ({
                   }`}
                 >
                   <li className="categories-ul-li_link">
-                    <Link to="/">All books</Link>
+                    <Link to="/" onClick={deleteSearchResult}>All books</Link>
                   </li>
                   <li>
-                    <Link to="/history">History</Link>
+                    <Link to="/history" onClick={deleteSearchResult}>History</Link>
                   </li>
                   <li>
-                    <Link to="/fantasy">Fantasy</Link>
+                    <Link to="/fantasy" onClick={deleteSearchResult}>Fantasy</Link>
                   </li>
                   <li>
-                    <Link to="/thriller">Thriller</Link>
+                    <Link to="/thriller" onClick={deleteSearchResult}>Thriller</Link>
                   </li>
                   <li>
-                    <Link to="/romance">Romance</Link>
+                    <Link to="/romance" onClick={deleteSearchResult}>Romance</Link>
                   </li>
                   <li>
-                    <Link to="/science%20fiction">Science fiction</Link>
+                    <Link to="/science%20fiction" onClick={deleteSearchResult}>Science fiction</Link>
                   </li>
                   <li>
-                    <Link to="/historical%20fiction">Historical fiction</Link>
+                    <Link to="/historical%20fiction" onClick={deleteSearchResult}>Historical fiction</Link>
                   </li>
                   <li>
-                    <Link to="/horror">Horror</Link>
+                    <Link to="/horror" onClick={deleteSearchResult}>Horror</Link>
                   </li>
                   <li>
-                    <Link to="/travel">Travel</Link>
+                    <Link to="/travel" onClick={deleteSearchResult}>Travel</Link>
                   </li>
                   <li>
-                    <Link to="/food%20and%20drink">Food and drink</Link>
+                    <Link to="/food%20and%20drink" onClick={deleteSearchResult}>Food and drink</Link>
                   </li>
                   <li>
-                    <Link to="/sport">Sport</Link>
+                    <Link to="/sport" onClick={deleteSearchResult}>Sport</Link>
                   </li>
                 </ul>
               }

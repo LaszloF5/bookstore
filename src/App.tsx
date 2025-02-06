@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
+
 import {
   HashRouter,
   Routes,
@@ -37,6 +38,10 @@ function App() {
     setActive(!isActive);
   };
 
+  const deleteSearchResult = () => {
+    setIsCurrentBook(false);
+  }
+
   interface Book {
     id: number;
     name: string;
@@ -68,10 +73,12 @@ function App() {
     getAllBooks();
   }, []);
 
+  const [ordered, setOrdered] = useState<Boolean>(false);
+
   useEffect(() => {
     const storedBooks = sessionStorage.getItem("books");
     setAddedBooks(storedBooks ? JSON.parse(storedBooks) : []);
-  }, []);
+  }, [ordered]);
 
   const historyBooks = useMemo(
     () => allBooks.filter((book: Book) => book.category === "history"),
@@ -195,10 +202,6 @@ function App() {
     }
   };
 
-  const isSuccessfulOrder = () => {
-    setAddedBooks([]);
-  };
-
   const [isVisibleArrow, setIsVisibleArrow] = useState(false);
 
   useEffect(() => {
@@ -232,6 +235,7 @@ function App() {
           isActive={isActive}
           addedBooks={addedBooks}
           searchBook={searchBook}
+          deleteSearchResult={deleteSearchResult}
         />
         {isVisibleArrow && (
           <img
@@ -264,14 +268,14 @@ function App() {
                         src={process.env.PUBLIC_URL + "mobile-size-bg.png"}
                         alt="bookstore"
                       />
-                      <h2 className="main-container_h2">All books</h2>
+                      <h2 className="main-container_h2 select-none">All books</h2>
                       <main className="main-container">
                         <div className="books-container">
                           {allBooks.map((book: Book) => {
                             return (
                               <div className="book-card" key={book.id}>
-                                <h3 className="book-card_h4">{book.author}</h3>
-                                <h4 className="book-card_h3">{book.name}</h4>
+                                <h3 className="book-card_h4 select-none">{book.author}</h3>
+                                <h4 className="book-card_h3 select-none">{book.name}</h4>
                                 <img
                                   className="book-card_img"
                                   src={book.image}
@@ -302,8 +306,8 @@ function App() {
                         className="book-card unique-book"
                         key={currentAuthor}
                       >
-                        <h3 className="book-card_h4">{currentAuthor}</h3>
-                        <h4 className="book-card_h3">{currentName}</h4>
+                        <h3 className="book-card_h4 select-none">{currentAuthor}</h3>
+                        <h4 className="book-card_h3 select-none">{currentName}</h4>
                         <img
                           className="book-card_img"
                           src={currentImg}
@@ -326,7 +330,7 @@ function App() {
                           Add to cart
                         </button>
                       </div>
-                      <h3>May this interest you</h3>
+                      <h3 className="select-none">May this interest you</h3>
                       <div className="other-books">
                         {allBooks
                           .filter(
@@ -338,10 +342,10 @@ function App() {
                           .map((book: Book) => {
                             return (
                               <div className="small-book-card" key={book.id}>
-                                <h3 className="small-book-card_h4">
+                                <h3 className="small-book-card_h3 select-none">
                                   {book.author}
                                 </h3>
-                                <h4 className="small-book-card_h3">
+                                <h4 className="small-book-card_h4 select-none">
                                   {book.name}
                                 </h4>
                                 <img
@@ -365,8 +369,8 @@ function App() {
               ) : (
                 <main className="main-container">
                   <div className="book-card" key={searchedBook[0].id}>
-                    <h3 className="book-card_h4">{searchedBook[0].author}</h3>
-                    <h4 className="book-card_h3">{searchedBook[0].name}</h4>
+                    <h3 className="book-card_h4 select-none">{searchedBook[0].author}</h3>
+                    <h4 className="book-card_h3 select-none">{searchedBook[0].name}</h4>
                     <img
                       className="book-card_img"
                       src={searchedBook[0].image}
@@ -402,7 +406,7 @@ function App() {
             path="/order"
             element={
               addedBooks.length > 0 ? (
-                <Order isSuccessfulOrder={isSuccessfulOrder} />
+                <Order ordered={ordered} setOrdered={setOrdered}/>
               ) : (
                 <Navigate to="/" />
               )
@@ -415,6 +419,17 @@ function App() {
                 books={historyBooks}
                 addToCart={addToCart}
                 className="bigger-card"
+                renderOnlyOne={renderOnlyOne}
+                isCurrentBook={isCurrentBook}
+                setIsCurrentBook={setIsCurrentBook}
+                currentName={currentName}
+                currentAuthor={currentAuthor}
+                currentImg={currentImg}
+                currentCategory={currentCategory}
+                currentLongDescription={currentLongDescription}
+                currentPrice={currentPrice}
+                currentId={currentId}
+                backFunction={backFunction}
               />
             }
           />
@@ -425,6 +440,17 @@ function App() {
                 books={fantasyBooks}
                 addToCart={addToCart}
                 className="bigger-card"
+                renderOnlyOne={renderOnlyOne}
+                isCurrentBook={isCurrentBook}
+                setIsCurrentBook={setIsCurrentBook}
+                currentName={currentName}
+                currentAuthor={currentAuthor}
+                currentImg={currentImg}
+                currentCategory={currentCategory}
+                currentLongDescription={currentLongDescription}
+                currentPrice={currentPrice}
+                currentId={currentId}
+                backFunction={backFunction}
               />
             }
           />
@@ -435,6 +461,17 @@ function App() {
                 books={thrillerBooks}
                 addToCart={addToCart}
                 className="bigger-card"
+                renderOnlyOne={renderOnlyOne}
+                isCurrentBook={isCurrentBook}
+                setIsCurrentBook={setIsCurrentBook}
+                currentName={currentName}
+                currentAuthor={currentAuthor}
+                currentImg={currentImg}
+                currentCategory={currentCategory}
+                currentLongDescription={currentLongDescription}
+                currentPrice={currentPrice}
+                currentId={currentId}
+                backFunction={backFunction}
               />
             }
           />
@@ -445,6 +482,17 @@ function App() {
                 books={romanceBooks}
                 addToCart={addToCart}
                 className="bigger-card"
+                renderOnlyOne={renderOnlyOne}
+                isCurrentBook={isCurrentBook}
+                setIsCurrentBook={setIsCurrentBook}
+                currentName={currentName}
+                currentAuthor={currentAuthor}
+                currentImg={currentImg}
+                currentCategory={currentCategory}
+                currentLongDescription={currentLongDescription}
+                currentPrice={currentPrice}
+                currentId={currentId}
+                backFunction={backFunction}
               />
             }
           />
@@ -455,6 +503,17 @@ function App() {
                 books={scienceFictionBooks}
                 addToCart={addToCart}
                 className="bigger-card"
+                renderOnlyOne={renderOnlyOne}
+                isCurrentBook={isCurrentBook}
+                setIsCurrentBook={setIsCurrentBook}
+                currentName={currentName}
+                currentAuthor={currentAuthor}
+                currentImg={currentImg}
+                currentCategory={currentCategory}
+                currentLongDescription={currentLongDescription}
+                currentPrice={currentPrice}
+                currentId={currentId}
+                backFunction={backFunction}
               />
             }
           />
@@ -465,6 +524,17 @@ function App() {
                 books={historicalFictionBooks}
                 addToCart={addToCart}
                 className="bigger-card"
+                renderOnlyOne={renderOnlyOne}
+                isCurrentBook={isCurrentBook}
+                setIsCurrentBook={setIsCurrentBook}
+                currentName={currentName}
+                currentAuthor={currentAuthor}
+                currentImg={currentImg}
+                currentCategory={currentCategory}
+                currentLongDescription={currentLongDescription}
+                currentPrice={currentPrice}
+                currentId={currentId}
+                backFunction={backFunction}
               />
             }
           />
@@ -475,6 +545,17 @@ function App() {
                 books={horrorBooks}
                 addToCart={addToCart}
                 className="bigger-card"
+                renderOnlyOne={renderOnlyOne}
+                isCurrentBook={isCurrentBook}
+                setIsCurrentBook={setIsCurrentBook}
+                currentName={currentName}
+                currentAuthor={currentAuthor}
+                currentImg={currentImg}
+                currentCategory={currentCategory}
+                currentLongDescription={currentLongDescription}
+                currentPrice={currentPrice}
+                currentId={currentId}
+                backFunction={backFunction}
               />
             }
           />
@@ -485,6 +566,17 @@ function App() {
                 books={travelBooks}
                 addToCart={addToCart}
                 className="bigger-card"
+                renderOnlyOne={renderOnlyOne}
+                isCurrentBook={isCurrentBook}
+                setIsCurrentBook={setIsCurrentBook}
+                currentName={currentName}
+                currentAuthor={currentAuthor}
+                currentImg={currentImg}
+                currentCategory={currentCategory}
+                currentLongDescription={currentLongDescription}
+                currentPrice={currentPrice}
+                currentId={currentId}
+                backFunction={backFunction}
               />
             }
           />
@@ -495,6 +587,17 @@ function App() {
                 books={foodAndDrinkBooks}
                 addToCart={addToCart}
                 className="bigger-card"
+                renderOnlyOne={renderOnlyOne}
+                isCurrentBook={isCurrentBook}
+                setIsCurrentBook={setIsCurrentBook}
+                currentName={currentName}
+                currentAuthor={currentAuthor}
+                currentImg={currentImg}
+                currentCategory={currentCategory}
+                currentLongDescription={currentLongDescription}
+                currentPrice={currentPrice}
+                currentId={currentId}
+                backFunction={backFunction}
               />
             }
           />
@@ -505,6 +608,17 @@ function App() {
                 books={sportBooks}
                 addToCart={addToCart}
                 className="bigger-card"
+                renderOnlyOne={renderOnlyOne}
+                isCurrentBook={isCurrentBook}
+                setIsCurrentBook={setIsCurrentBook}
+                currentName={currentName}
+                currentAuthor={currentAuthor}
+                currentImg={currentImg}
+                currentCategory={currentCategory}
+                currentLongDescription={currentLongDescription}
+                currentPrice={currentPrice}
+                currentId={currentId}
+                backFunction={backFunction}
               />
             }
           />
@@ -536,4 +650,5 @@ export default App;
   - az oldal újratöltésénél kiürül a kosár, erre figyelmeztetés. Nem, --> sessionStorage
   
   TODO:
+  - data management stb... meg kell írni, v vmi.
 */
