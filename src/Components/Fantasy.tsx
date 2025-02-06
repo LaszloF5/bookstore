@@ -119,6 +119,7 @@ const Fantasy: React.FC<BookListProps> = ({
                     className="book-card_img"
                     src={book.image}
                     alt="Book front side"
+                    onClick={() => renderOnlyOne(book.id)}
                   />
                   <p className="book-card_p">{book.longDescription}</p>
                   <p className="book-card_p">Price: {book.price} $</p>

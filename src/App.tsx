@@ -651,4 +651,5 @@ export default App;
   
   TODO:
   - data management stb... meg kell írni, v vmi.
+  - címek hosszának szabályozása, mert belelógnak a képbe
 */

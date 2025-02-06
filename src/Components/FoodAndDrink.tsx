@@ -31,10 +31,7 @@ interface BookListProps {
   allBooks: Book[];
 }
 
-const FoodAndDrink: React.FC<BookListProps> = ({
-  books,
-  addToCart,
-  className,
+const FoodAndDrink: React.FC<BookListProps> = ({ books, addToCart, className,
   renderOnlyOne,
   isCurrentBook,
   currentName,
@@ -44,8 +41,7 @@ const FoodAndDrink: React.FC<BookListProps> = ({
   currentLongDescription,
   currentPrice,
   currentId,
-  backFunction,
-}) => {
+  backFunction, }) => {
   return (
     <main className="main-container">
       <h2 className="select-none">Food and drink books</h2>
@@ -107,33 +103,30 @@ const FoodAndDrink: React.FC<BookListProps> = ({
             </div>
           </main>
         </>
-      ) : (
-        <>
-          <div className="books-container">
-            {books.map((book: Book) => {
-              return (
-                <div className={`book-card ${className}`} key={book.id}>
-                  <h3 className="book-card_h4 select-none">{book.author}</h3>
-                  <h4 className="book-card_h3 select-none">{book.name}</h4>
-                  <img
-                    className="book-card_img"
-                    src={book.image}
-                    alt="Book front side"
-                  />
-                  <p className="book-card_p">{book.longDescription}</p>
-                  <p className="book-card_p">Price: {book.price} $</p>
-                  <button
-                    className="btn book-card_btn add-btn"
-                    onClick={() => addToCart(book.id)}
-                  >
-                    Add to cart
-                  </button>
-                </div>
-              );
-            })}
-          </div>
-        </>
-      )}
+      ): <><div className="books-container">
+        {books.map((book: Book) => {
+          return (
+            <div className={`book-card ${className}`} key={book.id}>
+              <h3 className="book-card_h4 select-none">{book.author}</h3>
+              <h4 className="book-card_h3 select-none">{book.name}</h4>
+              <img
+                className="book-card_img"
+                src={book.image}
+                alt="Book front side"
+                onClick={() => renderOnlyOne(book.id)}
+              />
+              <p className="book-card_p">{book.longDescription}</p>
+              <p className="book-card_p">Price: {book.price} $</p>
+              <button
+                className="btn book-card_btn add-btn"
+                onClick={() => addToCart(book.id)}
+              >
+                Add to cart
+              </button>
+            </div>
+          );
+        })}
+      </div></>}
     </main>
   );
 };
