@@ -274,8 +274,8 @@ function App() {
                           {allBooks.map((book: Book) => {
                             return (
                               <div className="book-card" key={book.id}>
-                                <h3 className="book-card_h4 select-none">{book.author}</h3>
-                                <h4 className="book-card_h3 select-none">{book.name}</h4>
+                                <h3 className="book-card_h3 select-none">{book.author}</h3>
+                                <h4 className="book-card_h4 select-none">{book.name}</h4>
                                 <img
                                   className="book-card_img"
                                   src={book.image}
@@ -306,8 +306,8 @@ function App() {
                         className="book-card unique-book"
                         key={currentAuthor}
                       >
-                        <h3 className="book-card_h4 select-none">{currentAuthor}</h3>
-                        <h4 className="book-card_h3 select-none">{currentName}</h4>
+                        <h3 className="book-card_h3 select-none">{currentAuthor}</h3>
+                        <h4 className="book-card_h4 select-none">{currentName}</h4>
                         <img
                           className="book-card_img"
                           src={currentImg}
@@ -369,8 +369,8 @@ function App() {
               ) : (
                 <main className="main-container">
                   <div className="book-card" key={searchedBook[0].id}>
-                    <h3 className="book-card_h4 select-none">{searchedBook[0].author}</h3>
-                    <h4 className="book-card_h3 select-none">{searchedBook[0].name}</h4>
+                    <h3 className="book-card_h3 select-none">{searchedBook[0].author}</h3>
+                    <h4 className="book-card_h4 select-none">{searchedBook[0].name}</h4>
                     <img
                       className="book-card_img"
                       src={searchedBook[0].image}

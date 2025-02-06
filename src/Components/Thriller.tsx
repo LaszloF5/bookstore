@@ -49,8 +49,8 @@ const Thriller: React.FC<BookListProps> = ({ books, addToCart, className,
         <>
           <main className="main-container">
             <div className="book-card unique-book" key={currentAuthor}>
-              <h3 className="book-card_h4 select-none">{currentAuthor}</h3>
-              <h4 className="book-card_h3 select-none">{currentName}</h4>
+              <h3 className="book-card_h3 select-none">{currentAuthor}</h3>
+              <h4 className="book-card_h4 select-none">{currentName}</h4>
               <img
                 className="book-card_img"
                 src={currentImg}
@@ -107,8 +107,8 @@ const Thriller: React.FC<BookListProps> = ({ books, addToCart, className,
         {books.map((book: Book) => {
           return (
             <div className={`book-card ${className}`} key={book.id}>
-              <h3 className="book-card_h4 select-none">{book.author}</h3>
-              <h4 className="book-card_h3 select-none">{book.name}</h4>
+              <h3 className="book-card_h3 select-none">{book.author}</h3>
+              <h4 className="book-card_h4 select-none">{book.name}</h4>
               <img
                 className="book-card_img"
                 src={book.image}

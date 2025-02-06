@@ -252,7 +252,7 @@ p {
 }
 
 .book-card_h4 {
-  height: 42px;
+  min-height: 42px;
   margin: 8px;
 }
 
@@ -333,8 +333,16 @@ p {
 }
 
 .small-book-card_h4 {
-  height: 21px;
+  height: 42px;
   margin: 4px;
+  overflow: hidden;
+}
+
+.small-book-card_h4:hover {
+  overflow: visible;
+  z-index: 10;
+  min-height: 42px;
+  height: auto;
 }
 
 .small-book-card_img {
