@@ -9,6 +9,34 @@
   margin: 20px auto;
 }
 
+@keyframes shrinkAndDisappear {
+  0% {
+    transform: scaleX(1);
+  }
+
+  100% {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes appear {
+  0% {
+    transform: scaleX(0);
+  }
+
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.payment-info-form.active {
+  animation: shrinkAndDisappear 0.5s forwards;
+}
+
+.payment-info-form.inactive {
+  animation: appear 1s forwards;
+}
+
 h2 {
   font-size: 24px;
   margin-bottom: 20px;

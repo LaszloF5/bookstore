@@ -1,12 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 
-import {
-  HashRouter,
-  Routes,
-  Route,
-  Link,
-  Navigate,
-} from "react-router-dom";
+import { HashRouter, Routes, Route, Link, Navigate } from "react-router-dom";
 import Header from "./Components/Header.tsx";
 import History from "./Components/History.tsx";
 import Fantasy from "./Components/Fantasy.tsx";
@@ -20,6 +14,10 @@ import FoodAndDrink from "./Components/FoodAndDrink.tsx";
 import Sport from "./Components/Sport.tsx";
 import Cart from "./Components/Cart.tsx";
 import Order from "./Components/Order.tsx";
+import PrivacyPolicy from "./Components/PrivacyPolicy.tsx";
+import GeneralTermsAndConditions from "./Components/GeneralTermsAndConditions.tsx";
+import Contact from "./Components/Contact.tsx";
+import Footer from './Components/Footer.tsx';
 import "./App.css";
 
 function App() {
@@ -40,7 +38,7 @@ function App() {
 
   const deleteSearchResult = () => {
     setIsCurrentBook(false);
-  }
+  };
 
   interface Book {
     id: number;
@@ -78,6 +76,8 @@ function App() {
   useEffect(() => {
     const storedBooks = sessionStorage.getItem("books");
     setAddedBooks(storedBooks ? JSON.parse(storedBooks) : []);
+    setSearchedBook(null);
+    setIsCurrentBook(false);
   }, [ordered]);
 
   const historyBooks = useMemo(
@@ -179,8 +179,7 @@ function App() {
   const [currentId, setCurrentId] = useState<number>(0);
   const [currentCategory, setCurrentCategory] = useState<string>("");
   const [currentName, setCurrentName] = useState<string>("");
-  const [currentLongDescription, setCurrentLongDescription] =
-    useState<string>("");
+  const [currentLongDescription, setCurrentLongDescription] = useState<string>("");
   const [currentPrice, setCurrentPrice] = useState<number>(0);
   const [currentImg, setCurrentImg] = useState<string>("");
   const [isCurrentBook, setIsCurrentBook] = useState<boolean>(false);
@@ -268,14 +267,20 @@ function App() {
                         src={process.env.PUBLIC_URL + "mobile-size-bg.png"}
                         alt="bookstore"
                       />
-                      <h2 className="main-container_h2 select-none">All books</h2>
+                      <h2 className="main-container_h2 select-none">
+                        All books
+                      </h2>
                       <main className="main-container">
                         <div className="books-container">
                           {allBooks.map((book: Book) => {
                             return (
                               <div className="book-card" key={book.id}>
-                                <h3 className="book-card_h3 select-none">{book.author}</h3>
-                                <h4 className="book-card_h4 select-none">{book.name}</h4>
+                                <h3 className="book-card_h3 select-none">
+                                  {book.author}
+                                </h3>
+                                <h4 className="book-card_h4 select-none">
+                                  {book.name}
+                                </h4>
                                 <img
                                   className="book-card_img"
                                   src={book.image}
@@ -306,8 +311,12 @@ function App() {
                         className="book-card unique-book"
                         key={currentAuthor}
                       >
-                        <h3 className="book-card_h3 select-none">{currentAuthor}</h3>
-                        <h4 className="book-card_h4 select-none">{currentName}</h4>
+                        <h3 className="book-card_h3 select-none">
+                          {currentAuthor}
+                        </h3>
+                        <h4 className="book-card_h4 select-none">
+                          {currentName}
+                        </h4>
                         <img
                           className="book-card_img"
                           src={currentImg}
@@ -369,8 +378,12 @@ function App() {
               ) : (
                 <main className="main-container">
                   <div className="book-card" key={searchedBook[0].id}>
-                    <h3 className="book-card_h3 select-none">{searchedBook[0].author}</h3>
-                    <h4 className="book-card_h4 select-none">{searchedBook[0].name}</h4>
+                    <h3 className="book-card_h3 select-none">
+                      {searchedBook[0].author}
+                    </h3>
+                    <h4 className="book-card_h4 select-none">
+                      {searchedBook[0].name}
+                    </h4>
                     <img
                       className="book-card_img"
                       src={searchedBook[0].image}
@@ -406,7 +419,7 @@ function App() {
             path="/order"
             element={
               addedBooks.length > 0 ? (
-                <Order ordered={ordered} setOrdered={setOrdered}/>
+                <Order ordered={ordered} setOrdered={setOrdered} />
               ) : (
                 <Navigate to="/" />
               )
@@ -622,8 +635,15 @@ function App() {
               />
             }
           />
+          <Route path="/order/privacy-policy" element={<PrivacyPolicy />} />
+          <Route
+            path="/order/general-terms-and-conditions"
+            element={<GeneralTermsAndConditions />}
+          />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </div>
+      <Footer/>
     </HashRouter>
   );
 }
@@ -648,8 +668,11 @@ export default App;
   - csak a book legyen pointer.
   - amikor csak 1 könyv jelenik meg, a részletekkel, akkor alatta ugyanabból a kategóriából még pár megjelenhet, pl író cím kép kombinációval, és az is kattintható lesz.
   - az oldal újratöltésénél kiürül a kosár, erre figyelmeztetés. Nem, --> sessionStorage
+  - címek hosszának szabályozása, mert belelógnak a képbe
+  - data management stb... meg kell írni, v vmi.
   
   TODO:
-  - data management stb... meg kell írni, v vmi.
-  - címek hosszának szabályozása, mert belelógnak a képbe
+
+  - Az url-ből ne lehessen az order adatokat kiolvasni, not safe.
+
 */

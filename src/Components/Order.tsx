@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import "./Order.css";
+
+import { useLocation, useNavigate, Link } from "react-router-dom";
+import "./styles/Order.css";
 
 interface setOrdered {
   ordered: Boolean;
   setOrdered: Boolean;
 }
 
-const Order: React.FC<setOrdered> = ({ordered, setOrdered}) => {
+const Order: React.FC<setOrdered> = ({ ordered, setOrdered }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const addedBooks = location.state?.addedBooks || [];
@@ -28,17 +28,21 @@ const Order: React.FC<setOrdered> = ({ordered, setOrdered}) => {
     setPaymentMethodIsVisible(true);
   };
 
-  const [visibleMessage, setVisibleMessage] = useState(false);
+  const [visibleMessage, setVisibleMessage] = useState<Boolean>(false);
   const orderMessage = "Your order has been created successfully!";
+
+  const [orderAnimation, setOrderAnimation] = useState<Boolean>(false);
 
   const handleOrder = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Lefutottam.");
-    setVisibleMessage(true);
     sessionStorage.removeItem("books");
+    setOrderAnimation(true);
+    setTimeout(() =>{
+      setVisibleMessage(true);
+    }, 500)
     setTimeout(() => {
       navigate("/");
-      setOrdered(!ordered)
+      setOrdered(!ordered);
     }, 3000);
   };
 
@@ -48,7 +52,6 @@ const Order: React.FC<setOrdered> = ({ordered, setOrdered}) => {
       {shippingisVisible && (
         <form
           className="shipping-info-form"
-          method="POST"
           onSubmit={goToPayMethod}
         >
           <h2>Shipping Information</h2>
@@ -135,11 +138,10 @@ const Order: React.FC<setOrdered> = ({ordered, setOrdered}) => {
           />
 
           <label htmlFor="data-m" className="form-label select-none">
-            I have read and understood the{" "}
-            <a href="#" target="_blank" rel="noopener noreferrer">
-              Data Management Information
-            </a>
-            .
+            <p>
+              I have read and understood the
+              <Link to="/order/privacy-policy"> Privacy policy</Link>.
+            </p>
           </label>
           <input
             type="checkbox"
@@ -151,7 +153,12 @@ const Order: React.FC<setOrdered> = ({ordered, setOrdered}) => {
           />
 
           <label htmlFor="gen-terms" className="form-label select-none">
-            I have read and acknowledged the General Terms and Conditions.
+            <p>
+              I have read and acknowledged the{" "}
+              <Link to="/order/general-terms-and-conditions">
+                General Terms and Conditions
+              </Link>.
+            </p>
           </label>
           <input
             type="checkbox"
@@ -169,7 +176,7 @@ const Order: React.FC<setOrdered> = ({ordered, setOrdered}) => {
       )}
 
       {paymentMethodIsVisible && (
-        <form className="payment-info-form" onSubmit={handleOrder}>
+        <form className={`payment-info-form ${orderAnimation ? 'active' : 'inactive'}`} onSubmit={handleOrder}>
           <h2>Payment Information</h2>
           <label htmlFor="payment-method" className="form-label">
             Payment Method:

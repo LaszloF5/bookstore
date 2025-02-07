@@ -1,0 +1,50 @@
+.privacy-policy-container,
+.GTC-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.privacy-policy-container h2,
+.GTC-container h2 {
+  color: #444;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 5px;
+  margin-top: 20px;
+}
+
+.privacy-policy-container h3,
+.GTC-container h3 {
+  color: #555;
+  margin-top: 15px;
+}
+
+.privacy-policy-container ul,
+.GTC-container ul {
+  padding-left: 20px;
+}
+
+.privacy-policy-container li,
+.GTC-container li {
+  margin-bottom: 8px;
+  list-style-type: none;
+}
+
+.privacy-policy-container p,
+.GTC-container p {
+  margin-bottom: 15px;
+}
+
+.privacy-policy-container code,
+.GTC-container code {
+  background: #eee;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-family: monospace;
+}

@@ -1,5 +1,5 @@
 import React from "react";
-import "./childCompStyle.css";
+import "./styles/childCompStyle.css";
 
 interface Book {
   id: number;

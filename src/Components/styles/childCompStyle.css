@@ -83,6 +83,10 @@
     flex-direction: column;
   }
 
+  .goodForButtons {
+    margin-bottom: 100px;
+  }
+
   .buy_h3 {
     margin-top: 0;
   }

@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
-import "./childCompStyle.css";
+import "./styles/childCompStyle.css";
 
 interface Book {
   id: number;
@@ -23,6 +23,15 @@ interface addedBooksProps {
 
 const Cart: React.FC<addedBooksProps> = ({ addedBooks, setAddedBooks }) => {
   const navigate = useNavigate();
+
+  const [totalAmount, setTotalAmount] = useState<Number>(0);
+
+  useEffect(() => {
+    const currAmount = Math.round(
+      addedBooks.reduce((acc, book) => acc + book.pay, 0) * 100
+    ) / 100;
+    setTotalAmount(currAmount);
+  }, [addedBooks]);
 
   const removeBook = (bookToRemove: Book) => {
     const updatedBooks = addedBooks.filter(
@@ -50,7 +59,7 @@ const Cart: React.FC<addedBooksProps> = ({ addedBooks, setAddedBooks }) => {
   }
 
   return (
-    <main className="main-container">
+    <main className="main-container goodForButtons">
       <h2>Shopping Cart</h2>
       <div className="books-container">
         {addedBooks.length === 0 ? (
@@ -90,9 +99,7 @@ const Cart: React.FC<addedBooksProps> = ({ addedBooks, setAddedBooks }) => {
       <div className="buy">
         <h3 className="buy_h3">
           Total amount:{" "}
-          {Math.round(
-            addedBooks.reduce((acc, book) => acc + book.pay, 0) * 100
-          ) / 100}{" "}
+          {totalAmount.toFixed(2)}
           $
         </h3>
         {addedBooks.length === 0 ? (

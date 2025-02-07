@@ -63,6 +63,9 @@ export default function Header ({
               }
             </li>
             <li>
+              <Link to="/contact" onClick={deleteSearchResult}>Contact</Link>
+            </li>
+            <li>
               <Link to="/cart" className="flex">
                 <img
                   className="shopping-cart"
