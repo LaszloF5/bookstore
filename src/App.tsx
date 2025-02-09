@@ -31,6 +31,7 @@ function App() {
   const [addToCartAnimation, setAddToCartAnimation] = useState(false);
 
   const [allBooks, setAllBooks] = useState<Book[]>([]);
+  const loadingText: string = 'Loading...';
 
   const toggleCategories: Function = () => {
     setActive(!isActive);
@@ -272,7 +273,7 @@ function App() {
                       </h2>
                       <main className="main-container">
                         <div className="books-container">
-                          {allBooks.map((book: Book) => {
+                          {allBooks.length === 0 ? <p className="loading-text">{loadingText}</p> : allBooks.map((book: Book) => {
                             return (
                               <div className="book-card" key={book.id}>
                                 <h3 className="book-card_h3 select-none">
@@ -673,6 +674,6 @@ export default App;
   
   TODO:
 
-  - Az url-ből ne lehessen az order adatokat kiolvasni, not safe.
+  - Az url-ből ne lehessen az order adatokat kiolvasni.
 
 */

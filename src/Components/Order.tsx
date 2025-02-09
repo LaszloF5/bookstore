@@ -140,7 +140,7 @@ const Order: React.FC<setOrdered> = ({ ordered, setOrdered }) => {
           <label htmlFor="data-m" className="form-label select-none">
             <p>
               I have read and understood the
-              <Link to="/order/privacy-policy"> Privacy policy</Link>.
+              <Link to="/order/privacy-policy" target="_blank"> Privacy policy</Link>.
             </p>
           </label>
           <input
@@ -155,7 +155,7 @@ const Order: React.FC<setOrdered> = ({ ordered, setOrdered }) => {
           <label htmlFor="gen-terms" className="form-label select-none">
             <p>
               I have read and acknowledged the{" "}
-              <Link to="/order/general-terms-and-conditions">
+              <Link to="/order/general-terms-and-conditions" target="_blank">
                 General Terms and Conditions
               </Link>.
             </p>

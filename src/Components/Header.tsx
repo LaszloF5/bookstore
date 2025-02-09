@@ -1,5 +1,5 @@
 import React from "react";
-import { HashRouter, Routes, Route, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Header ({
     toggleCategories,
