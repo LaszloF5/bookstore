@@ -241,7 +241,7 @@ function App() {
           <img
             onClick={scrollToTop}
             className="top-arrow"
-            src={process.env.PUBLIC_URL + "blue-top-arrow.png"}
+            src={process.env.PUBLIC_URL + "/blue-top-arrow.png"}
             alt="Top arrow icon"
           />
         )}
@@ -260,12 +260,12 @@ function App() {
                     <>
                       <img
                         className="bg-img"
-                        src={process.env.PUBLIC_URL + "Bookstore-bg.png"}
+                        src={process.env.PUBLIC_URL + "/Bookstore-bg.png"}
                         alt="bookstore"
                       />
                       <img
                         className="small-bg-img"
-                        src={process.env.PUBLIC_URL + "mobile-size-bg.png"}
+                        src={process.env.PUBLIC_URL + "/mobile-size-bg.png"}
                         alt="bookstore"
                       />
                       <h2 className="main-container_h2 select-none">
