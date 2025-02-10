@@ -69,7 +69,7 @@ export default function Header ({
               <Link to="/cart" className="flex">
                 <img
                   className="shopping-cart"
-                  src={process.env.PUBLIC_URL + "shopping-cart.png"}
+                  src={process.env.PUBLIC_URL + "/shopping-cart.png"}
                   alt="cart"
                 />
                 {addedBooks.length > 0 && (
