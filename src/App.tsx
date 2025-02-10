@@ -31,7 +31,7 @@ function App() {
   const [addToCartAnimation, setAddToCartAnimation] = useState(false);
 
   const [allBooks, setAllBooks] = useState<Book[]>([]);
-  const loadingText: string = 'Loading...';
+  const loadingText: string = 'Loading datas...';
 
   const toggleCategories: Function = () => {
     setActive(!isActive);
@@ -55,7 +55,7 @@ function App() {
 
   useEffect(() => {
     const getAllBooks = async (): Promise<Book[]> => {
-      const url = "http://localhost:8000/library";
+      const url = "https://bookstore-7x9q.onrender.com/library";
       try {
         const response = await fetch(url);
         if (!response.ok) {
