@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 
 import { HashRouter, Routes, Route, Link, Navigate } from "react-router-dom";
 import Header from "./Components/Header.tsx";
@@ -17,7 +17,7 @@ import Order from "./Components/Order.tsx";
 import PrivacyPolicy from "./Components/PrivacyPolicy.tsx";
 import GeneralTermsAndConditions from "./Components/GeneralTermsAndConditions.tsx";
 import Contact from "./Components/Contact.tsx";
-import Footer from './Components/Footer.tsx';
+import Footer from "./Components/Footer.tsx";
 import "./App.css";
 
 function App() {
@@ -31,12 +31,32 @@ function App() {
   const [addToCartAnimation, setAddToCartAnimation] = useState(false);
 
   const [allBooks, setAllBooks] = useState<Book[]>([]);
-  const loadingText: string = 'Loading datas...';
+  const loadingText: string = "Loading datas...";
 
-  const toggleCategories: Function = () => {
-    setActive(!isActive);
+  const headerRef = useRef<HTMLDivElement>(null);
+
+  const toggleCategories = (event: React.MouseEvent) => {
+    if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
+      setActive(false);
+    } else {
+      setActive(!isActive);
+    }
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
+        setActive(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+  
   const deleteSearchResult = () => {
     setIsCurrentBook(false);
   };
@@ -180,7 +200,8 @@ function App() {
   const [currentId, setCurrentId] = useState<number>(0);
   const [currentCategory, setCurrentCategory] = useState<string>("");
   const [currentName, setCurrentName] = useState<string>("");
-  const [currentLongDescription, setCurrentLongDescription] = useState<string>("");
+  const [currentLongDescription, setCurrentLongDescription] =
+    useState<string>("");
   const [currentPrice, setCurrentPrice] = useState<number>(0);
   const [currentImg, setCurrentImg] = useState<string>("");
   const [isCurrentBook, setIsCurrentBook] = useState<boolean>(false);
@@ -231,6 +252,7 @@ function App() {
     <HashRouter>
       <div className="App">
         <Header
+          headerRef={headerRef}
           toggleCategories={toggleCategories}
           isActive={isActive}
           addedBooks={addedBooks}
@@ -273,36 +295,40 @@ function App() {
                       </h2>
                       <main className="main-container">
                         <div className="books-container">
-                          {allBooks.length === 0 ? <p className="loading-text">{loadingText}</p> : allBooks.map((book: Book) => {
-                            return (
-                              <div className="book-card" key={book.id}>
-                                <h3 className="book-card_h3 select-none">
-                                  {book.author}
-                                </h3>
-                                <h4 className="book-card_h4 select-none">
-                                  {book.name}
-                                </h4>
-                                <img
-                                  className="book-card_img"
-                                  src={book.image}
-                                  alt="Book front side"
-                                  onClick={() => renderOnlyOne(book.id)}
-                                />
-                                <p className="book-card_p">
-                                  {book.shortDescription}
-                                </p>
-                                <p className="book-card_price">
-                                  Price: {book.price} $
-                                </p>
-                                <button
-                                  className="btn book-card_btn add-btn"
-                                  onClick={() => addToCart(book.id)}
-                                >
-                                  Add to cart
-                                </button>
-                              </div>
-                            );
-                          })}
+                          {allBooks.length === 0 ? (
+                            <p className="loading-text">{loadingText}</p>
+                          ) : (
+                            allBooks.map((book: Book) => {
+                              return (
+                                <div className="book-card" key={book.id}>
+                                  <h3 className="book-card_h3 select-none">
+                                    {book.author}
+                                  </h3>
+                                  <h4 className="book-card_h4 select-none">
+                                    {book.name}
+                                  </h4>
+                                  <img
+                                    className="book-card_img"
+                                    src={book.image}
+                                    alt="Book front side"
+                                    onClick={() => renderOnlyOne(book.id)}
+                                  />
+                                  <p className="book-card_p">
+                                    {book.shortDescription}
+                                  </p>
+                                  <p className="book-card_price">
+                                    Price: {book.price} $
+                                  </p>
+                                  <button
+                                    className="btn book-card_btn add-btn"
+                                    onClick={() => addToCart(book.id)}
+                                  >
+                                    Add to cart
+                                  </button>
+                                </div>
+                              );
+                            })
+                          )}
                         </div>
                       </main>
                     </>
@@ -644,7 +670,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </div>
-      <Footer/>
+      <Footer />
     </HashRouter>
   );
 }
