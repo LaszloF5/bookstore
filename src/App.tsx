@@ -31,12 +31,15 @@ function App() {
   const [addToCartAnimation, setAddToCartAnimation] = useState(false);
 
   const [allBooks, setAllBooks] = useState<Book[]>([]);
-  const loadingText: string = "Loading datas...";
+  const loadingText: string = "Waking up the server, please wait...";
 
   const headerRef = useRef<HTMLDivElement>(null);
 
   const toggleCategories = (event: React.MouseEvent) => {
-    if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
+    if (
+      headerRef.current &&
+      !headerRef.current.contains(event.target as Node)
+    ) {
       setActive(false);
     } else {
       setActive(!isActive);
@@ -45,18 +48,21 @@ function App() {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
+      if (
+        headerRef.current &&
+        !headerRef.current.contains(event.target as Node)
+      ) {
         setActive(false);
       }
     };
 
-    document.addEventListener('click', handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
 
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, []);
-  
+
   const deleteSearchResult = () => {
     setIsCurrentBook(false);
   };
@@ -280,19 +286,25 @@ function App() {
                 <>
                   {isCurrentBook === false ? (
                     <>
-                      <img
-                        className="bg-img"
-                        src={process.env.PUBLIC_URL + "/Bookstore-bg.png"}
-                        alt="bookstore"
-                      />
-                      <img
-                        className="small-bg-img"
-                        src={process.env.PUBLIC_URL + "/mobile-size-bg.png"}
-                        alt="bookstore"
-                      />
-                      <h2 className="main-container_h2 select-none">
-                        All books
-                      </h2>
+                      {allBooks.length === 0 ? (
+                        ""
+                      ) : (
+                        <>
+                          <img
+                            className="bg-img"
+                            src={process.env.PUBLIC_URL + "/Bookstore-bg.png"}
+                            alt="bookstore"
+                          />
+                          <img
+                            className="small-bg-img"
+                            src={process.env.PUBLIC_URL + "/mobile-size-bg.png"}
+                            alt="bookstore"
+                          />
+                          <h2 className="main-container_h2 select-none">
+                            All books
+                          </h2>
+                        </>
+                      )}
                       <main className="main-container">
                         <div className="books-container">
                           {allBooks.length === 0 ? (
